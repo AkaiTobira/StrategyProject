@@ -1,0 +1,605 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://Textures/Map/Area22.png" type="Texture" id=1]
+[ext_resource path="res://Textures/Map/Area23.png" type="Texture" id=2]
+[ext_resource path="res://Textures/Map/Area18.png" type="Texture" id=3]
+[ext_resource path="res://Textures/Map/Area11.png" type="Texture" id=4]
+[ext_resource path="res://Textures/Map/map1.png" type="Texture" id=5]
+[ext_resource path="res://Textures/Map/Area20.png" type="Texture" id=6]
+[ext_resource path="res://Textures/Map/Area15.png" type="Texture" id=7]
+[ext_resource path="res://Textures/Map/Area16.png" type="Texture" id=8]
+[ext_resource path="res://Textures/Map/Area19.png" type="Texture" id=9]
+[ext_resource path="res://Textures/Map/Area25.png" type="Texture" id=10]
+[ext_resource path="res://Textures/Map/Area26.png" type="Texture" id=11]
+[ext_resource path="res://Textures/Map/Area24.png" type="Texture" id=12]
+[ext_resource path="res://Textures/Map/Area14.png" type="Texture" id=13]
+[ext_resource path="res://Textures/Map/Area17.png" type="Texture" id=14]
+[ext_resource path="res://Textures/Map/Area21.png" type="Texture" id=15]
+[ext_resource path="res://Scripts/Territory.gd" type="Script" id=16]
+[ext_resource path="res://Scripts/FortPoint.gd" type="Script" id=17]
+
+
+
+[node name="World" type="Node2D"]
+
+[node name="WorldMap" type="Sprite" parent="."]
+position = Vector2( 2364.39, 1621.13 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="NavPoints" type="Node2D" parent="."]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Area1" type="Area2D" parent="NavPoints"]
+script = ExtResource( 16 )
+resources = [ 32, 12, 67, 321 ]
+resources_prodution = [ 3, 1, 6, 15 ]
+
+[node name="Center" type="Node2D" parent="NavPoints/Area1"]
+position = Vector2( 1879.01, 361.271 )
+
+[node name="Sprite" type="Sprite" parent="NavPoints/Area1"]
+position = Vector2( 1858, 749 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 4 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="NavPoints/Area1"]
+visible = false
+polygon = PoolVector2Array( 1440.27, 44.551, 2383.02, 57.8292, 2467.11, 411.912, 2174.99, 1022.71, 2055.49, 1044.84, 1900.58, 712.883, 1745.67, 947.464, 1865.17, 1310.4, 1723.54, 1452.03, 1533.22, 1376.79, 1227.82, 681.901 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Forts" type="Node2D" parent="NavPoints/Area1"]
+
+[node name="1" type="Node2D" parent="NavPoints/Area1/Forts"]
+position = Vector2( 1629.66, 1406.5 )
+script = ExtResource( 17 )
+neighbourArea = "Area3"
+
+[node name="2" type="Node2D" parent="NavPoints/Area1/Forts"]
+position = Vector2( 2437.15, 331.805 )
+script = ExtResource( 17 )
+neighbourArea = "Area14"
+
+[node name="3" type="Node2D" parent="NavPoints/Area1/Forts"]
+position = Vector2( 2114.16, 1042.4 )
+script = ExtResource( 17 )
+neighbourArea = "Area7"
+
+[node name="Area2" type="Area2D" parent="NavPoints"]
+script = ExtResource( 16 )
+__meta__ = {
+"_edit_lock_": true
+}
+current_owner = 3
+
+[node name="Center" type="Node2D" parent="NavPoints/Area2"]
+position = Vector2( 2412.87, 2130.78 )
+
+[node name="Sprite" type="Sprite" parent="NavPoints/Area2"]
+position = Vector2( 2439.69, 2169.54 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 11 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="NavPoints/Area2"]
+polygon = PoolVector2Array( 2247.66, 2471.29, 2788.8, 2105.01, 2686.3, 1930.16, 2339.61, 1841.23, 2335.09, 2068.83, 2108.99, 2160.78, 2099.94, 2358.24 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Forts" type="Node2D" parent="NavPoints/Area2"]
+
+[node name="1" type="Node2D" parent="NavPoints/Area2/Forts"]
+position = Vector2( 2113.92, 2360.81 )
+script = ExtResource( 17 )
+neighbourArea = "Area8"
+
+[node name="2" type="Node2D" parent="NavPoints/Area2/Forts"]
+position = Vector2( 2739.59, 2022.02 )
+script = ExtResource( 17 )
+neighbourArea = "Area5"
+
+[node name="Area3" type="Area2D" parent="NavPoints"]
+script = ExtResource( 16 )
+__meta__ = {
+"_edit_lock_": true
+}
+current_owner = 4
+
+[node name="Center" type="Node2D" parent="NavPoints/Area3"]
+position = Vector2( 1580.1, 1827.96 )
+
+[node name="Sprite" type="Sprite" parent="NavPoints/Area3"]
+position = Vector2( 1620.16, 2044.08 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 10 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="NavPoints/Area3"]
+polygon = PoolVector2Array( 1777.24, 2667.97, 1699.13, 2400.17, 1584.76, 2302.54, 1682.4, 2179.8, 1819.08, 1948.27, 2056.19, 1747.43, 1908.35, 1607.95, 1746.56, 1647, 1668.45, 1577.27, 1718.66, 1440.58, 1559.66, 1373.63, 1537.48, 1472.91, 1361.6, 1800.43, 1216.55, 2023.59, 1141.23, 2383.44, 1289.08, 2628.91, 1565.24, 2720.97 )
+
+[node name="Forts" type="Node2D" parent="NavPoints/Area3"]
+
+[node name="1" type="Node2D" parent="NavPoints/Area3/Forts"]
+position = Vector2( 1629.66, 1406.5 )
+script = ExtResource( 17 )
+neighbourArea = "Area1"
+
+[node name="2" type="Node2D" parent="NavPoints/Area3/Forts"]
+position = Vector2( 1995.35, 1681.17 )
+script = ExtResource( 17 )
+neighbourArea = "Area7"
+
+[node name="3" type="Node2D" parent="NavPoints/Area3/Forts"]
+position = Vector2( 1415.5, 1669.13 )
+script = ExtResource( 17 )
+neighbourArea = "Area4"
+
+[node name="4" type="Node2D" parent="NavPoints/Area3/Forts"]
+position = Vector2( 1716.88, 2539.03 )
+script = ExtResource( 17 )
+neighbourArea = "Area8"
+
+[node name="Area4" type="Area2D" parent="NavPoints"]
+script = ExtResource( 16 )
+__meta__ = {
+"_edit_lock_": true
+}
+current_owner = 4
+
+[node name="Center" type="Node2D" parent="NavPoints/Area4"]
+position = Vector2( 934.802, 1730.62 )
+
+[node name="Sprite" type="Sprite" parent="NavPoints/Area4"]
+position = Vector2( 991.487, 1850.01 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 12 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="NavPoints/Area4"]
+polygon = PoolVector2Array( 478.59, 2191.85, 875.749, 2463.63, 964.246, 1952.08, 1197.36, 1768.61, 1352.77, 1788.03, 1542.72, 1455.63, 1049.86, 1176.64, 701.175, 1477.91, 676.069, 1606.23, 383.171, 1787.55 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Forts" type="Node2D" parent="NavPoints/Area4"]
+
+[node name="1" type="Node2D" parent="NavPoints/Area4/Forts"]
+position = Vector2( 1413.36, 1641.78 )
+script = ExtResource( 17 )
+neighbourArea = "Area3"
+
+[node name="2" type="Node2D" parent="NavPoints/Area4/Forts"]
+position = Vector2( 663.387, 2326.28 )
+script = ExtResource( 17 )
+neighbourArea = "Area10"
+
+[node name="Area5" type="Area2D" parent="NavPoints"]
+script = ExtResource( 16 )
+__meta__ = {
+"_edit_lock_": true
+}
+current_owner = 3
+
+[node name="Center" type="Node2D" parent="NavPoints/Area5"]
+position = Vector2( 3019.59, 1713 )
+
+[node name="Sprite" type="Sprite" parent="NavPoints/Area5"]
+position = Vector2( 3041, 1752.79 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="NavPoints/Area5"]
+polygon = PoolVector2Array( 2684.22, 1927.02, 2804.17, 2116.71, 3152.86, 1996.76, 3381.6, 1790.34, 3384.39, 1480.7, 3336.97, 1416.54, 3158.44, 1402.6, 3069.17, 1444.44, 3038.49, 1544.86, 2832.07, 1544.86, 2737.22, 1575.54, 2726.06, 1717.81 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Forts" type="Node2D" parent="NavPoints/Area5"]
+
+[node name="1" type="Node2D" parent="NavPoints/Area5/Forts"]
+position = Vector2( 3359.04, 1463.29 )
+script = ExtResource( 17 )
+neighbourArea = "Area12"
+
+[node name="2" type="Node2D" parent="NavPoints/Area5/Forts"]
+position = Vector2( 3022.66, 1567.6 )
+script = ExtResource( 17 )
+neighbourArea = "Area6"
+
+[node name="3" type="Node2D" parent="NavPoints/Area5/Forts"]
+position = Vector2( 2747.38, 2035.66 )
+script = ExtResource( 17 )
+neighbourArea = "Area2"
+
+[node name="Area6" type="Area2D" parent="NavPoints"]
+script = ExtResource( 16 )
+__meta__ = {
+"_edit_lock_": true
+}
+current_owner = 3
+
+[node name="Center" type="Node2D" parent="NavPoints/Area6"]
+position = Vector2( 2843.83, 1242.59 )
+
+[node name="Sprite" type="Sprite" parent="NavPoints/Area6"]
+position = Vector2( 2800.93, 1273.44 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="NavPoints/Area6"]
+polygon = PoolVector2Array( 2455.17, 1220.46, 2411.13, 1103, 2707.7, 959.123, 3074.74, 1117.69, 3180.44, 1411.32, 3095.29, 1461.24, 3048.31, 1584.56, 2784.04, 1531.71, 2678.33, 1343.78, 2543.26, 1249.82 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Forts" type="Node2D" parent="NavPoints/Area6"]
+
+[node name="1" type="Node2D" parent="NavPoints/Area6/Forts"]
+position = Vector2( 3051.25, 1511.99 )
+script = ExtResource( 17 )
+neighbourArea = "Area5"
+
+[node name="2" type="Node2D" parent="NavPoints/Area6/Forts"]
+position = Vector2( 2431.28, 1179.86 )
+script = ExtResource( 17 )
+neighbourArea = "Area7"
+
+[node name="Area7" type="Area2D" parent="NavPoints"]
+script = ExtResource( 16 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Center" type="Node2D" parent="NavPoints/Area7"]
+position = Vector2( 2175.84, 1344.83 )
+
+[node name="Sprite" type="Sprite" parent="NavPoints/Area7"]
+position = Vector2( 2209.17, 1381.03 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 15 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="NavPoints/Area7"]
+polygon = PoolVector2Array( 2052.89, 1725.5, 2466.92, 1643.29, 2487.47, 1481.79, 2343.59, 1349.65, 2446.36, 1223.39, 2408.19, 1103, 2276.06, 1105.94, 2179.16, 1014.91, 2038.21, 1047.21, 1935.44, 1323.23, 2035.28, 1431.87, 1917.82, 1616.86 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Forts" type="Node2D" parent="NavPoints/Area7"]
+
+[node name="1" type="Node2D" parent="NavPoints/Area7/Forts"]
+position = Vector2( 2118.54, 1047.48 )
+script = ExtResource( 17 )
+neighbourArea = "Area1"
+
+[node name="2" type="Node2D" parent="NavPoints/Area7/Forts"]
+position = Vector2( 2431.28, 1179.86 )
+script = ExtResource( 17 )
+neighbourArea = "Area6"
+
+[node name="3" type="Node2D" parent="NavPoints/Area7/Forts"]
+position = Vector2( 1979.14, 1670.63 )
+script = ExtResource( 17 )
+neighbourArea = "Area3"
+
+[node name="Area8" type="Area2D" parent="NavPoints"]
+script = ExtResource( 16 )
+__meta__ = {
+"_edit_lock_": true
+}
+current_owner = 2
+
+[node name="Center" type="Node2D" parent="NavPoints/Area8"]
+position = Vector2( 2045.5, 2564.2 )
+
+[node name="Sprite" type="Sprite" parent="NavPoints/Area8"]
+position = Vector2( 2076, 2546 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 6 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="NavPoints/Area8"]
+polygon = PoolVector2Array( 1689.98, 2397.33, 1842.9, 2237.91, 2012.08, 2124.04, 2099.93, 2169.59, 2106.44, 2368.05, 2282.13, 2485.18, 2435.05, 2621.83, 2457.82, 2755.22, 2389.5, 2852.83, 1989.31, 2986.23, 1859.17, 2934.17, 1842.9, 2673.89, 1751.8, 2641.35 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Forts" type="Node2D" parent="NavPoints/Area8"]
+
+[node name="1" type="Node2D" parent="NavPoints/Area8/Forts"]
+position = Vector2( 1712.28, 2491.14 )
+script = ExtResource( 17 )
+neighbourArea = "Area3"
+
+[node name="4" type="Node2D" parent="NavPoints/Area8/Forts"]
+position = Vector2( 2104.49, 2332.13 )
+script = ExtResource( 17 )
+neighbourArea = "Area2"
+
+[node name="2" type="Node2D" parent="NavPoints/Area8/Forts"]
+position = Vector2( 2430.48, 2713.61 )
+script = ExtResource( 17 )
+neighbourArea = "Area11"
+
+[node name="3" type="Node2D" parent="NavPoints/Area8/Forts"]
+position = Vector2( 2086.99, 2904.93 )
+script = ExtResource( 17 )
+neighbourArea = "Area9"
+
+[node name="Area9" type="Area2D" parent="NavPoints"]
+script = ExtResource( 16 )
+__meta__ = {
+"_edit_lock_": true
+}
+current_owner = 2
+
+[node name="Center" type="Node2D" parent="NavPoints/Area9"]
+position = Vector2( 2058.08, 3075.26 )
+
+[node name="Sprite" type="Sprite" parent="NavPoints/Area9"]
+position = Vector2( 1943.65, 2999.91 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 9 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="NavPoints/Area9"]
+polygon = PoolVector2Array( 1239.71, 3006.95, 1849.32, 2897.36, 1962.34, 2962.43, 2369.89, 2801.46, 2726.07, 2976.13, 2369.89, 3209.01, 1222.59, 3205.59 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Forts" type="Node2D" parent="NavPoints/Area9"]
+
+[node name="1" type="Node2D" parent="NavPoints/Area9/Forts"]
+position = Vector2( 1216.73, 3103.29 )
+script = ExtResource( 17 )
+neighbourArea = "Area10"
+
+[node name="2" type="Node2D" parent="NavPoints/Area9/Forts"]
+position = Vector2( 2494.08, 2883.22 )
+script = ExtResource( 17 )
+neighbourArea = "Area11"
+
+[node name="3" type="Node2D" parent="NavPoints/Area9/Forts"]
+position = Vector2( 2086.99, 2904.93 )
+script = ExtResource( 17 )
+neighbourArea = "Area8"
+
+[node name="Area10" type="Area2D" parent="NavPoints"]
+script = ExtResource( 16 )
+__meta__ = {
+"_edit_lock_": true
+}
+current_owner = 2
+
+[node name="Center" type="Node2D" parent="NavPoints/Area10"]
+position = Vector2( 587.845, 2805.89 )
+
+[node name="Sprite" type="Sprite" parent="NavPoints/Area10"]
+position = Vector2( 723.649, 2700.8 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 3 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="NavPoints/Area10"]
+polygon = PoolVector2Array( 1232.86, 3174.77, 1232.86, 3006.95, 958.878, 2784.34, 873.258, 2469.26, 475.983, 2171.3, 256.797, 2321.99, 215.13, 2452.14, 242.529, 2685.02, 163.759, 2931.61, 283.626, 3185.04 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Forts" type="Node2D" parent="NavPoints/Area10"]
+
+[node name="1" type="Node2D" parent="NavPoints/Area10/Forts"]
+position = Vector2( 1216.73, 3103.29 )
+script = ExtResource( 17 )
+neighbourArea = "Area9"
+
+[node name="2" type="Node2D" parent="NavPoints/Area10/Forts"]
+position = Vector2( 689.406, 2353.21 )
+script = ExtResource( 17 )
+neighbourArea = "Area4"
+
+[node name="Area11" type="Area2D" parent="NavPoints"]
+script = ExtResource( 16 )
+__meta__ = {
+"_edit_lock_": true
+}
+current_owner = 1
+
+[node name="Center" type="Node2D" parent="NavPoints/Area11"]
+position = Vector2( 3164.5, 2544.05 )
+
+[node name="Sprite" type="Sprite" parent="NavPoints/Area11"]
+position = Vector2( 3106.71, 2466.65 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 14 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="NavPoints/Area11"]
+polygon = PoolVector2Array( 2432.61, 2632.28, 2733.99, 2491.87, 2894.96, 2419.95, 3049.07, 2217.89, 3124.42, 2262.41, 3545.66, 1974.73, 3864.17, 2755.58, 3490.87, 2724.75, 3244.28, 2837.77, 2960.03, 2793.25, 2860.71, 2923.39, 2713.44, 2967.91, 2340.14, 2803.52, 2429.18, 2731.6 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Forts" type="Node2D" parent="NavPoints/Area11"]
+
+[node name="1" type="Node2D" parent="NavPoints/Area11/Forts"]
+position = Vector2( 2568.25, 2915.14 )
+script = ExtResource( 17 )
+neighbourArea = "Area9"
+
+[node name="2" type="Node2D" parent="NavPoints/Area11/Forts"]
+position = Vector2( 2427.83, 2700.36 )
+script = ExtResource( 17 )
+neighbourArea = "Area9"
+
+[node name="3" type="Node2D" parent="NavPoints/Area11/Forts"]
+position = Vector2( 3705.15, 2353.21 )
+script = ExtResource( 17 )
+neighbourArea = "Area12"
+
+[node name="Area12" type="Area2D" parent="NavPoints"]
+script = ExtResource( 16 )
+__meta__ = {
+"_edit_lock_": true
+}
+current_owner = 1
+
+[node name="Center" type="Node2D" parent="NavPoints/Area12"]
+position = Vector2( 3980.49, 1913.51 )
+
+[node name="Sprite" type="Sprite" parent="NavPoints/Area12"]
+position = Vector2( 3885.61, 1922.66 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 8 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="NavPoints/Area12"]
+polygon = PoolVector2Array( 3549.09, 1956.54, 3610.74, 1843.52, 3610.74, 1716.8, 3734.03, 1662.01, 3751.15, 1535.29, 3668.96, 1466.79, 3569.64, 1521.59, 3460.04, 1531.87, 3364.15, 1401.72, 3576.49, 1247.61, 3699.78, 1285.28, 3829.92, 1240.76, 4018.29, 1042.12, 4155.28, 1576.39, 4371.04, 1891.47, 4463.51, 2257.92, 4186.1, 2627.45, 3857.32, 2774.72 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Forts" type="Node2D" parent="NavPoints/Area12"]
+
+[node name="1" type="Node2D" parent="NavPoints/Area12/Forts"]
+position = Vector2( 3706.51, 2318.39 )
+script = ExtResource( 17 )
+neighbourArea = "Area11"
+
+[node name="2" type="Node2D" parent="NavPoints/Area12/Forts"]
+position = Vector2( 4243.19, 1750.25 )
+script = ExtResource( 17 )
+neighbourArea = "Area13"
+
+[node name="3" type="Node2D" parent="NavPoints/Area12/Forts"]
+position = Vector2( 3418.64, 1461.93 )
+script = ExtResource( 17 )
+neighbourArea = "Area5"
+
+[node name="4" type="Node2D" parent="NavPoints/Area12/Forts"]
+position = Vector2( 3828.28, 1240.41 )
+script = ExtResource( 17 )
+neighbourArea = "Area14"
+
+[node name="Area13" type="Area2D" parent="NavPoints"]
+script = ExtResource( 16 )
+__meta__ = {
+"_edit_lock_": true
+}
+current_owner = 1
+
+[node name="Center" type="Node2D" parent="NavPoints/Area13"]
+position = Vector2( 4419.39, 1289.16 )
+
+[node name="Sprite" type="Sprite" parent="NavPoints/Area13"]
+position = Vector2( 4407.97, 1307.57 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 7 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="NavPoints/Area13"]
+polygon = PoolVector2Array( 4158.7, 1646.98, 4336.79, 1831.92, 4460.08, 1835.35, 4494.33, 1527.11, 4679.27, 1373, 4686.12, 1177.79, 4388.16, 831.883, 4285.42, 759.962, 4155.28, 941.476, 4258.02, 1112.72, 4271.72, 1373, 4227.2, 1551.09 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Forts" type="Node2D" parent="NavPoints/Area13"]
+
+[node name="4" type="Node2D" parent="NavPoints/Area13/Forts"]
+position = Vector2( 4278.35, 1773.11 )
+script = ExtResource( 17 )
+neighbourArea = "Area12"
+
+[node name="5" type="Node2D" parent="NavPoints/Area13/Forts"]
+position = Vector2( 4225.61, 841.323 )
+script = ExtResource( 17 )
+neighbourArea = "Area14"
+
+[node name="Area14" type="Area2D" parent="NavPoints"]
+script = ExtResource( 16 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Center" type="Node2D" parent="NavPoints/Area14"]
+position = Vector2( 3450.26, 622 )
+
+[node name="Sprite" type="Sprite" parent="NavPoints/Area14"]
+position = Vector2( 3336.35, 670.762 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 13 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="NavPoints/Area14"]
+polygon = PoolVector2Array( 2460.01, 434.608, 2805.91, 619.546, 3350.45, 883.255, 3590.19, 1263.41, 3686.08, 1301.08, 3833.35, 1256.56, 4018.29, 1078.47, 3990.89, 985.998, 3997.74, 903.804, 4162.13, 924.352, 4292.27, 749.688, 4138.15, 482.555, 3648.41, 352.413, 3206.61, 6.50914, 2353.84, 23.6331 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Forts" type="Node2D" parent="NavPoints/Area14"]
+
+[node name="4" type="Node2D" parent="NavPoints/Area14/Forts"]
+position = Vector2( 3837.07, 1221.07 )
+script = ExtResource( 17 )
+neighbourArea = "Area12"
+
+[node name="6" type="Node2D" parent="NavPoints/Area14/Forts"]
+position = Vector2( 2400.71, 227.751 )
+script = ExtResource( 17 )
+neighbourArea = "Area1"
+
+[node name="5" type="Node2D" parent="NavPoints/Area14/Forts"]
+position = Vector2( 4225.61, 841.323 )
+script = ExtResource( 17 )
+neighbourArea = "Area13"
+[connection signal="area_entered" from="NavPoints/Area1" to="NavPoints/Area1" method="_on_Area_area_entered"]
+[connection signal="area_entered" from="NavPoints/Area2" to="NavPoints/Area2" method="_on_Area_area_entered"]
+[connection signal="area_entered" from="NavPoints/Area3" to="NavPoints/Area3" method="_on_Area_area_entered"]
+[connection signal="area_entered" from="NavPoints/Area4" to="NavPoints/Area4" method="_on_Area_area_entered"]
+[connection signal="area_entered" from="NavPoints/Area5" to="NavPoints/Area5" method="_on_Area_area_entered"]
+[connection signal="area_entered" from="NavPoints/Area6" to="NavPoints/Area6" method="_on_Area_area_entered"]
+[connection signal="area_entered" from="NavPoints/Area7" to="NavPoints/Area7" method="_on_Area_area_entered"]
+[connection signal="area_entered" from="NavPoints/Area8" to="NavPoints/Area8" method="_on_Area_area_entered"]
+[connection signal="area_entered" from="NavPoints/Area9" to="NavPoints/Area9" method="_on_Area_area_entered"]
+[connection signal="area_entered" from="NavPoints/Area10" to="NavPoints/Area10" method="_on_Area_area_entered"]
+[connection signal="area_entered" from="NavPoints/Area11" to="NavPoints/Area11" method="_on_Area_area_entered"]
+[connection signal="area_entered" from="NavPoints/Area12" to="NavPoints/Area12" method="_on_Area_area_entered"]
+[connection signal="area_entered" from="NavPoints/Area13" to="NavPoints/Area13" method="_on_Area_area_entered"]
+[connection signal="area_entered" from="NavPoints/Area14" to="NavPoints/Area14" method="_on_Area_area_entered"]

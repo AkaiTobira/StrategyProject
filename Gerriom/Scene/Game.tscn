@@ -1,0 +1,688 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://Scene/World1.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Textures/GUI/B3.png" type="Texture" id=2]
+[ext_resource path="res://Textures/GUI/B2.png" type="Texture" id=3]
+[ext_resource path="res://Scripts/Traveler.gd" type="Script" id=4]
+[ext_resource path="res://Scripts/Game.gd" type="Script" id=5]
+[ext_resource path="res://Scripts/Camera.gd" type="Script" id=6]
+[ext_resource path="res://Textures/GUI/LowInterface.png" type="Texture" id=7]
+[ext_resource path="res://Textures/GUI/button.png" type="Texture" id=8]
+[ext_resource path="res://Textures/GUI/Helper_Background.png" type="Texture" id=9]
+[ext_resource path="res://Scripts/MenuButton.gd" type="Script" id=10]
+[ext_resource path="res://Resources/Fonts/rm_albion.ttf" type="DynamicFontData" id=11]
+[ext_resource path="res://Textures/GUI/button_hover.png" type="Texture" id=12]
+[ext_resource path="res://Textures/GUI/gold.png" type="Texture" id=13]
+[ext_resource path="res://Scripts/GUI.gd" type="Script" id=14]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 26.2114
+
+[sub_resource type="Animation" id=2]
+resource_name = "Show"
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureButton2:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.5, 0.6, 0.7, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 76.2122, 516.805 ), Vector2( 139.067, 513.157 ), Vector2( 216.922, 521.51 ), Vector2( 282.741, 530.09 ), Vector2( 412.272, 549.919 ), Vector2( 471.596, 558.369 ), Vector2( 527.41, 569.171 ), Vector2( 579.595, 574.609 ), Vector2( 679.78, 582.265 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("TextureButton:rect_position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -631.011, 431.55 ), Vector2( -30, 431.55 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("TextureButton2:rect_rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 180.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("TextureButton2/Tip:rect_position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 45.2358, 33.2789 ), Vector2( 56.6675, 233.333 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("TextureButton2/Tip:rect_rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 180.0 ]
+}
+
+[sub_resource type="DynamicFont" id=3]
+size = 102
+outline_size = 1
+font_data = ExtResource( 11 )
+
+[sub_resource type="DynamicFontData" id=4]
+antialiased = false
+font_path = "res://Resources/Fonts/rm_albion.ttf"
+
+[sub_resource type="DynamicFont" id=5]
+size = 72
+outline_size = 1
+font_data = SubResource( 4 )
+
+[node name="Game" type="Node2D"]
+script = ExtResource( 5 )
+
+[node name="World" parent="." instance=ExtResource( 1 )]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 1781.86, 661.179 )
+current = true
+zoom = Vector2( 4, 4 )
+limit_left = 0
+limit_top = 0
+limit_right = 4724
+limit_bottom = 3240
+script = ExtResource( 6 )
+
+[node name="MouseButtonMarker" type="Area2D" parent="." groups=[
+"MouseClicker",
+]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MouseButtonMarker"]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="MouseButtonMarker"]
+visible = false
+position = Vector2( 0.198608, 1.90735e-06 )
+scale = Vector2( 1.13241, 1.10904 )
+texture = ExtResource( 2 )
+
+[node name="GUI" type="CanvasLayer" parent="."]
+script = ExtResource( 14 )
+
+[node name="LowPart" type="Control" parent="GUI"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GUI/LowPart"]
+anims/Show = SubResource( 2 )
+
+[node name="TextureButton" type="TextureRect" parent="GUI/LowPart"]
+margin_left = -631.011
+margin_top = 431.55
+margin_right = 168.989
+margin_bottom = 731.551
+texture = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton2" type="TextureButton" parent="GUI/LowPart"]
+margin_left = 76.2122
+margin_top = 516.805
+margin_right = 194.212
+margin_bottom = 736.805
+rect_scale = Vector2( 0.3, 0.3 )
+texture_normal = ExtResource( 8 )
+texture_hover = ExtResource( 12 )
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "Cos"
+}
+
+[node name="Tip" type="Control" parent="GUI/LowPart/TextureButton2"]
+visible = false
+margin_left = 45.2358
+margin_top = 33.2789
+margin_right = 85.2359
+margin_bottom = 73.2789
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect2" type="TextureRect" parent="GUI/LowPart/TextureButton2/Tip"]
+modulate = Color( 0.321569, 0.219608, 0.219608, 1 )
+margin_left = 147.0
+margin_top = -15.9998
+margin_right = 847.0
+margin_bottom = 284.0
+rect_scale = Vector2( 0.806, 0.32 )
+texture = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="GUI/LowPart/TextureButton2/Tip"]
+margin_left = 150.333
+margin_top = -12.6667
+margin_right = 850.333
+margin_bottom = 287.333
+rect_scale = Vector2( 0.797, 0.302 )
+texture = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="GUI/LowPart/TextureButton2/Tip"]
+modulate = Color( 0, 0, 0, 1 )
+self_modulate = Color( 0.709804, 0.0509804, 0.0509804, 0.831373 )
+margin_left = 164.0
+margin_top = -5.0
+margin_right = 590.0
+margin_bottom = 64.0
+custom_fonts/font = SubResource( 3 )
+text = "Show/Hide  build menu."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UpperPart" type="Control" parent="GUI"]
+margin_top = -498.0
+margin_right = 40.0
+margin_bottom = -458.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="GUI/UpperPart"]
+modulate = Color( 0.529412, 0.494118, 0.945098, 1 )
+margin_left = 863.632
+margin_top = 510.0
+margin_right = 1563.63
+margin_bottom = 810.0
+rect_scale = Vector2( 0.23, 0.172 )
+texture = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" type="TextureRect" parent="GUI/UpperPart"]
+margin_left = 787.841
+margin_top = 448.156
+margin_right = 1587.84
+margin_bottom = 748.157
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 7 )
+flip_h = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton3" type="TextureRect" parent="GUI/UpperPart/TextureButton"]
+margin_left = 68.4811
+margin_top = 99.5497
+margin_right = 868.481
+margin_bottom = 399.551
+rect_scale = Vector2( 0.3, 0.3 )
+texture = ExtResource( 13 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="GUI/UpperPart"]
+margin_left = 902.208
+margin_top = 513.849
+margin_right = 1007.21
+margin_bottom = 561.849
+custom_fonts/font = SubResource( 5 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+text = "000000"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Travelers" type="Node2D" parent="."]
+
+[node name="Traveler" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler2" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler3" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler4" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler5" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler6" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler7" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler14" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler13" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler12" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler11" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler10" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler9" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler8" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler28" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler27" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler26" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler25" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler24" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler23" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler22" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler21" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler20" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler19" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler18" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler17" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler16" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler15" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler56" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler55" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler54" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler53" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler52" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler51" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler50" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler49" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler48" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler47" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler46" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler45" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler44" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler43" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler42" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler41" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler40" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler39" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler38" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler37" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler36" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler35" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler34" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler33" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler32" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler31" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler30" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler29" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler84" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler83" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler82" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler81" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler80" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler79" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler78" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler77" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler76" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler75" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler74" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler73" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler72" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler71" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler70" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler69" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler68" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler67" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler66" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler65" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler64" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler63" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler62" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler61" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler60" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler59" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler58" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+
+[node name="Traveler57" type="Sprite" parent="Travelers"]
+z_index = 2
+texture = ExtResource( 3 )
+script = ExtResource( 4 )
+[connection signal="button_down" from="GUI/LowPart/TextureButton2" to="GUI/LowPart/TextureButton2" method="_on_TextureButton_button_down"]
+[connection signal="mouse_entered" from="GUI/LowPart/TextureButton2" to="GUI/LowPart/TextureButton2" method="_on_TextureButton_mouse_entered"]
+[connection signal="mouse_exited" from="GUI/LowPart/TextureButton2" to="GUI/LowPart/TextureButton2" method="_on_TextureButton_mouse_exited"]

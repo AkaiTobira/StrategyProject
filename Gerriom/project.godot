@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "Camera2D",
 "class": "MainCamera",
 "language": "GDScript",
-"path": "res://Camera.gd"
+"path": "res://Scripts/Camera.gd"
 } ]
 _global_script_class_icons={
 "MainCamera": ""
@@ -21,8 +21,15 @@ _global_script_class_icons={
 [application]
 
 config/name="Gerriom"
-run/main_scene="res://Game.tscn"
+run/main_scene="res://Scene/Game.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+PlayerColors="*res://Scripts/PlayerColors.gd"
+Utils="*res://Scripts/Utility.gd"
+UIHandle="*res://Scripts/World_Processor.gd"
+PlayerInfo="*res://Scripts/PlayerInfo.gd"
 
 [rendering]
 
