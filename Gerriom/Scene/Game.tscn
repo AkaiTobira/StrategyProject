@@ -1,99 +1,129 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=26 format=2]
 
-[ext_resource path="res://Scene/World1.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scene/WorldSandbox.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Textures/GUI/B3.png" type="Texture" id=2]
-[ext_resource path="res://Textures/GUI/B2.png" type="Texture" id=3]
-[ext_resource path="res://Scripts/Traveler.gd" type="Script" id=4]
+[ext_resource path="res://Scripts/Traveler.gd" type="Script" id=3]
+[ext_resource path="res://Scripts/Army.gd" type="Script" id=4]
 [ext_resource path="res://Scripts/Game.gd" type="Script" id=5]
 [ext_resource path="res://Scripts/Camera.gd" type="Script" id=6]
-[ext_resource path="res://Textures/GUI/LowInterface.png" type="Texture" id=7]
-[ext_resource path="res://Textures/GUI/button.png" type="Texture" id=8]
-[ext_resource path="res://Textures/GUI/Helper_Background.png" type="Texture" id=9]
-[ext_resource path="res://Scripts/MenuButton.gd" type="Script" id=10]
-[ext_resource path="res://Resources/Fonts/rm_albion.ttf" type="DynamicFontData" id=11]
-[ext_resource path="res://Textures/GUI/button_hover.png" type="Texture" id=12]
-[ext_resource path="res://Textures/GUI/gold.png" type="Texture" id=13]
+[ext_resource path="res://Scripts/TurnControl.gd" type="Script" id=7]
+[ext_resource path="res://Textures/Emblems/Crusate.png" type="Texture" id=8]
+[ext_resource path="res://Textures/GUI/Handler.png" type="Texture" id=9]
 [ext_resource path="res://Scripts/GUI.gd" type="Script" id=14]
+[ext_resource path="res://Textures/GUI/B5.png" type="Texture" id=15]
+[ext_resource path="res://Textures/GUI/Atack.png" type="Texture" id=16]
+[ext_resource path="res://Textures/GUI/Battle_interface1.png" type="Texture" id=17]
+[ext_resource path="res://Textures/GUI/Battle_interface2.png" type="Texture" id=18]
+[ext_resource path="res://Textures/GUI/Battle_interface3.png" type="Texture" id=19]
+[ext_resource path="res://Textures/Emblems/BlackShield.png" type="Texture" id=20]
+[ext_resource path="res://Textures/Emblems/Fenix.png" type="Texture" id=21]
+[ext_resource path="res://Scene/AttackAnimation.gd" type="Script" id=22]
+[ext_resource path="res://Textures/GUI/Interface_Background.png" type="Texture" id=23]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 26.2114
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="DynamicFontData" id=6]
+font_path = "res://Resources/Fonts/rm_albion.ttf"
+
+[sub_resource type="DynamicFont" id=7]
+size = 58
+font_data = SubResource( 6 )
+
+[sub_resource type="Animation" id=10]
 resource_name = "Show"
 tracks/0/type = "value"
-tracks/0/path = NodePath("TextureButton2:rect_position")
+tracks/0/path = NodePath("Control:rect_position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.5, 0.6, 0.7, 0.8, 1 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 76.2122, 516.805 ), Vector2( 139.067, 513.157 ), Vector2( 216.922, 521.51 ), Vector2( 282.741, 530.09 ), Vector2( 412.272, 549.919 ), Vector2( 471.596, 558.369 ), Vector2( 527.41, 569.171 ), Vector2( 579.595, 574.609 ), Vector2( 679.78, 582.265 ) ]
+"values": [ Vector2( 0, 0 ), Vector2( -990, 0 ) ]
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "Switch"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("ActiveEmblem:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.9, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("TextureButton:rect_position")
+tracks/1/path = NodePath("NextEmblem:modulate")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 1 ),
+"times": PoolRealArray( 0, 0.9, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "Invade"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("AttackAnimation/OfensiveArmy:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( -631.011, 431.55 ), Vector2( -30, 431.55 ) ]
+"values": [ Vector2( 0, 0 ), Vector2( 2, 2 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("AttackAnimation/DefenceArmy:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 2, 2 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("TextureButton2:rect_rotation")
+tracks/2/path = NodePath("AttackAnimation/OfensiveArmy:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 1 ),
+"times": PoolRealArray( 0, 4 ),
 "transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 0.0, 180.0 ]
+"update": 1,
+"values": [ true, false ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("TextureButton2/Tip:rect_position")
+tracks/3/path = NodePath("AttackAnimation/DefenceArmy:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 1 ),
+"times": PoolRealArray( 0, 4 ),
 "transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( 45.2358, 33.2789 ), Vector2( 56.6675, 233.333 ) ]
+"update": 1,
+"values": [ true, false ]
 }
-tracks/4/type = "value"
-tracks/4/path = NodePath("TextureButton2/Tip:rect_rotation")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 0.0, 180.0 ]
-}
-
-[sub_resource type="DynamicFont" id=3]
-size = 102
-outline_size = 1
-font_data = ExtResource( 11 )
-
-[sub_resource type="DynamicFontData" id=4]
-antialiased = false
-font_path = "res://Resources/Fonts/rm_albion.ttf"
-
-[sub_resource type="DynamicFont" id=5]
-size = 72
-outline_size = 1
-font_data = SubResource( 4 )
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 5 )
@@ -126,563 +156,424 @@ texture = ExtResource( 2 )
 [node name="GUI" type="CanvasLayer" parent="."]
 script = ExtResource( 14 )
 
-[node name="LowPart" type="Control" parent="GUI"]
+[node name="Control" type="Control" parent="GUI"]
 margin_right = 40.0
 margin_bottom = 40.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="GUI/LowPart"]
-anims/Show = SubResource( 2 )
-
-[node name="TextureButton" type="TextureRect" parent="GUI/LowPart"]
-margin_left = -631.011
-margin_top = 431.55
-margin_right = 168.989
-margin_bottom = 731.551
-texture = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureButton2" type="TextureButton" parent="GUI/LowPart"]
-margin_left = 76.2122
-margin_top = 516.805
-margin_right = 194.212
-margin_bottom = 736.805
-rect_scale = Vector2( 0.3, 0.3 )
-texture_normal = ExtResource( 8 )
-texture_hover = ExtResource( 12 )
-script = ExtResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false,
-"_editor_description_": "Cos"
-}
-
-[node name="Tip" type="Control" parent="GUI/LowPart/TextureButton2"]
-visible = false
-margin_left = 45.2358
-margin_top = 33.2789
-margin_right = 85.2359
-margin_bottom = 73.2789
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect2" type="TextureRect" parent="GUI/LowPart/TextureButton2/Tip"]
-modulate = Color( 0.321569, 0.219608, 0.219608, 1 )
-margin_left = 147.0
-margin_top = -15.9998
-margin_right = 847.0
-margin_bottom = 284.0
-rect_scale = Vector2( 0.806, 0.32 )
-texture = ExtResource( 9 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect" type="TextureRect" parent="GUI/LowPart/TextureButton2/Tip"]
-margin_left = 150.333
-margin_top = -12.6667
-margin_right = 850.333
-margin_bottom = 287.333
-rect_scale = Vector2( 0.797, 0.302 )
-texture = ExtResource( 9 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="GUI/LowPart/TextureButton2/Tip"]
-modulate = Color( 0, 0, 0, 1 )
-self_modulate = Color( 0.709804, 0.0509804, 0.0509804, 0.831373 )
-margin_left = 164.0
-margin_top = -5.0
-margin_right = 590.0
-margin_bottom = 64.0
-custom_fonts/font = SubResource( 3 )
-text = "Show/Hide  build menu."
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="UpperPart" type="Control" parent="GUI"]
-margin_top = -498.0
+[node name="Button1" type="Control" parent="GUI/Control"]
 margin_right = 40.0
-margin_bottom = -458.0
+margin_bottom = 40.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect" type="TextureRect" parent="GUI/UpperPart"]
-modulate = Color( 0.529412, 0.494118, 0.945098, 1 )
-margin_left = 863.632
-margin_top = 510.0
-margin_right = 1563.63
-margin_bottom = 810.0
-rect_scale = Vector2( 0.23, 0.172 )
+[node name="TextureButton" type="TextureButton" parent="GUI/Control/Button1"]
+margin_left = 31.0
+margin_top = 31.0
+margin_right = 237.0
+margin_bottom = 104.0
+rect_scale = Vector2( 1.25, 0.6 )
+texture_normal = ExtResource( 19 )
+texture_pressed = ExtResource( 17 )
+texture_hover = ExtResource( 18 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="GUI/Control/Button1"]
+anchor_left = 0.087
+anchor_top = 0.2
+anchor_right = 0.087
+anchor_bottom = 0.2
+margin_left = 64.9433
+margin_top = 24.6723
+margin_right = 240.943
+margin_bottom = 64.6723
+custom_fonts/font = SubResource( 7 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "BUtton Name"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button2" type="Control" parent="GUI/Control"]
+margin_top = 48.0
+margin_right = 40.0
+margin_bottom = 88.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" type="TextureButton" parent="GUI/Control/Button2"]
+margin_left = 31.0
+margin_top = 31.0
+margin_right = 237.0
+margin_bottom = 104.0
+rect_scale = Vector2( 1.25, 0.6 )
+texture_normal = ExtResource( 19 )
+texture_pressed = ExtResource( 17 )
+texture_hover = ExtResource( 18 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="GUI/Control/Button2"]
+anchor_left = 0.087
+anchor_top = 0.2
+anchor_right = 0.087
+anchor_bottom = 0.2
+margin_left = 64.9433
+margin_top = 24.6723
+margin_right = 240.943
+margin_bottom = 64.6723
+custom_fonts/font = SubResource( 7 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "BUtton Name"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button3" type="Control" parent="GUI/Control"]
+margin_top = 97.0
+margin_right = 40.0
+margin_bottom = 137.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" type="TextureButton" parent="GUI/Control/Button3"]
+margin_left = 31.0
+margin_top = 31.0
+margin_right = 237.0
+margin_bottom = 104.0
+rect_scale = Vector2( 1.25, 0.6 )
+texture_normal = ExtResource( 19 )
+texture_pressed = ExtResource( 17 )
+texture_hover = ExtResource( 18 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="GUI/Control/Button3"]
+anchor_left = 0.087
+anchor_top = 0.2
+anchor_right = 0.087
+anchor_bottom = 0.2
+margin_left = 64.9433
+margin_top = 24.6723
+margin_right = 240.943
+margin_bottom = 64.6723
+custom_fonts/font = SubResource( 7 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "BUtton Name"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Menus" type="Control" parent="GUI"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GUI/Menus"]
+playback_speed = 4.0
+anims/Show = SubResource( 10 )
+
+[node name="Control" type="Control" parent="GUI/Menus"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="GUI/Menus/Control"]
+modulate = Color( 1, 1, 1, 0.901961 )
+margin_left = 1288.0
+margin_top = 4.0
+margin_right = 2288.0
+margin_bottom = 723.0
+texture = ExtResource( 23 )
+expand = true
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RaidMenu" type="Control" parent="GUI/Menus/Control"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="GUI/Menus/Control/RaidMenu"]
+modulate = Color( 1, 1, 1, 0.729412 )
+margin_left = 1348.0
+margin_top = 310.0
+margin_right = 1950.0
+margin_bottom = 619.0
+texture = ExtResource( 23 )
+expand = true
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect2" type="TextureRect" parent="GUI/Menus/Control/RaidMenu"]
+modulate = Color( 1, 1, 1, 0.729412 )
+margin_left = 1969.0
+margin_top = 48.0
+margin_right = 2258.0
+margin_bottom = 686.0
+texture = ExtResource( 23 )
+expand = true
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ConfirmButton" type="Control" parent="GUI/Menus/Control/RaidMenu"]
+margin_top = 48.0
+margin_right = 40.0
+margin_bottom = 88.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" type="TextureButton" parent="GUI/Menus/Control/RaidMenu/ConfirmButton"]
+margin_left = 1349.53
+margin_top = 587.923
+margin_right = 1555.53
+margin_bottom = 660.923
+rect_scale = Vector2( 0.726, 0.6 )
+texture_normal = ExtResource( 19 )
+texture_pressed = ExtResource( 17 )
+texture_hover = ExtResource( 18 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="GUI/Menus/Control/RaidMenu/ConfirmButton"]
+anchor_left = 0.087
+anchor_top = 0.2
+anchor_right = 0.087
+anchor_bottom = 0.2
+margin_left = 1335.06
+margin_top = 582.768
+margin_right = 1511.06
+margin_bottom = 665.768
+custom_fonts/font = SubResource( 7 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "Fight
+"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TurnControl" type="Control" parent="GUI"]
+margin_left = -52.0
+margin_top = 6.0
+margin_right = -12.0
+margin_bottom = 46.0
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="GUI/TurnControl"]
+margin_left = 65.0
+margin_top = 535.0
+margin_right = 116.0
+margin_bottom = 586.0
+rect_scale = Vector2( 0.8, 0.8 )
 texture = ExtResource( 9 )
+stretch_mode = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureButton" type="TextureRect" parent="GUI/UpperPart"]
-margin_left = 787.841
-margin_top = 448.156
-margin_right = 1587.84
-margin_bottom = 748.157
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 7 )
-flip_h = true
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GUI/TurnControl"]
+playback_speed = 4.0
+anims/Switch = SubResource( 11 )
+
+[node name="ActiveEmblem" type="TextureRect" parent="GUI/TurnControl"]
+margin_left = 65.0
+margin_top = 546.0
+margin_right = 271.0
+margin_bottom = 752.0
+rect_scale = Vector2( 0.8, 0.8 )
+texture = ExtResource( 21 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureButton3" type="TextureRect" parent="GUI/UpperPart/TextureButton"]
-margin_left = 68.4811
-margin_top = 99.5497
-margin_right = 868.481
-margin_bottom = 399.551
-rect_scale = Vector2( 0.3, 0.3 )
-texture = ExtResource( 13 )
+[node name="NextEmblem" type="TextureRect" parent="GUI/TurnControl"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 65.0
+margin_top = 546.0
+margin_right = 271.0
+margin_bottom = 752.0
+rect_scale = Vector2( 0.8, 0.8 )
+texture = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="GUI/UpperPart"]
-margin_left = 902.208
-margin_top = 513.849
-margin_right = 1007.21
-margin_bottom = 561.849
-custom_fonts/font = SubResource( 5 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
-text = "000000"
+[node name="Button" type="Control" parent="GUI/TurnControl"]
+margin_left = 14.0476
+margin_top = 575.167
+margin_right = 54.0476
+margin_bottom = 615.167
+rect_scale = Vector2( 0.8, 0.8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" type="TextureButton" parent="GUI/TurnControl/Button"]
+margin_left = 60.0
+margin_top = 24.0
+margin_right = 266.0
+margin_bottom = 97.0
+rect_scale = Vector2( 1.009, 0.813 )
+texture_normal = ExtResource( 19 )
+texture_pressed = ExtResource( 17 )
+texture_hover = ExtResource( 18 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="GUI/TurnControl/Button"]
+anchor_left = 0.087
+anchor_top = 0.2
+anchor_right = 0.087
+anchor_bottom = 0.2
+margin_left = 64.9433
+margin_top = 24.6723
+margin_right = 240.943
+margin_bottom = 64.6723
+custom_fonts/font = SubResource( 7 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "Next turn"
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Travelers" type="Node2D" parent="."]
+visible = false
 
 [node name="Traveler" type="Sprite" parent="Travelers"]
 z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
+texture = ExtResource( 2 )
+script = ExtResource( 3 )
 
 [node name="Traveler2" type="Sprite" parent="Travelers"]
 z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
+texture = ExtResource( 2 )
+script = ExtResource( 3 )
 
 [node name="Traveler3" type="Sprite" parent="Travelers"]
 z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
+texture = ExtResource( 2 )
+script = ExtResource( 3 )
 
 [node name="Traveler4" type="Sprite" parent="Travelers"]
 z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
+texture = ExtResource( 2 )
+script = ExtResource( 3 )
 
 [node name="Traveler5" type="Sprite" parent="Travelers"]
 z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
+texture = ExtResource( 2 )
+script = ExtResource( 3 )
 
 [node name="Traveler6" type="Sprite" parent="Travelers"]
 z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler7" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler14" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler13" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler12" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler11" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler10" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler9" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler8" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler28" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler27" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler26" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler25" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler24" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler23" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler22" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler21" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler20" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler19" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler18" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler17" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler16" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler15" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler56" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler55" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler54" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler53" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler52" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler51" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler50" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler49" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler48" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler47" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler46" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler45" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler44" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler43" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler42" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler41" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler40" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler39" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler38" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler37" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler36" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler35" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler34" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler33" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler32" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler31" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler30" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler29" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler84" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler83" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler82" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler81" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler80" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler79" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler78" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler77" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler76" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
+texture = ExtResource( 2 )
+script = ExtResource( 3 )
 
-[node name="Traveler75" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler74" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-
-[node name="Traveler73" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
+[node name="Armies" type="Node2D" parent="."]
+visible = false
 
-[node name="Traveler72" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
+[node name="Army" type="Node2D" parent="Armies"]
 script = ExtResource( 4 )
 
-[node name="Traveler71" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
+[node name="Sprite" type="Sprite" parent="Armies/Army"]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 15 )
 
-[node name="Traveler70" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
+[node name="Line2D" type="Line2D" parent="Armies/Army"]
+points = PoolVector2Array( 55.3989, -47.1949, 117.301, -34.1628 )
+width = 80.0
+default_color = Color( 0.996078, 0.996078, 1, 1 )
+texture = ExtResource( 16 )
+texture_mode = 1
 
-[node name="Traveler69" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
+[node name="Army2" type="Node2D" parent="Armies"]
 script = ExtResource( 4 )
 
-[node name="Traveler68" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
+[node name="Sprite" type="Sprite" parent="Armies/Army2"]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 15 )
 
-[node name="Traveler67" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
+[node name="Line2D" type="Line2D" parent="Armies/Army2"]
+points = PoolVector2Array( 55.3989, -47.1949, 117.301, -34.1628 )
+width = 80.0
+default_color = Color( 0.996078, 0.996078, 1, 1 )
+texture = ExtResource( 16 )
+texture_mode = 1
 
-[node name="Traveler66" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
+[node name="Army3" type="Node2D" parent="Armies"]
 script = ExtResource( 4 )
 
-[node name="Traveler65" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
+[node name="Sprite" type="Sprite" parent="Armies/Army3"]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 15 )
 
-[node name="Traveler64" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
+[node name="Line2D" type="Line2D" parent="Armies/Army3"]
+points = PoolVector2Array( 55.3989, -47.1949, 117.301, -34.1628 )
+width = 80.0
+default_color = Color( 0.996078, 0.996078, 1, 1 )
+texture = ExtResource( 16 )
+texture_mode = 1
 
-[node name="Traveler63" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
+[node name="AttackAnimation" type="AnimationPlayer" parent="."]
+playback_speed = 3.0
+anims/Invade = SubResource( 8 )
+script = ExtResource( 22 )
 
-[node name="Traveler62" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
+[node name="OfensiveArmy" type="Node2D" parent="AttackAnimation"]
 
-[node name="Traveler61" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
+[node name="Front" type="Sprite" parent="AttackAnimation/OfensiveArmy"]
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 20 )
 
-[node name="Traveler60" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
+[node name="Emblem" type="Sprite" parent="AttackAnimation/OfensiveArmy"]
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 21 )
 
-[node name="Traveler59" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
+[node name="DefenceArmy" type="Node2D" parent="AttackAnimation"]
 
-[node name="Traveler58" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
+[node name="Front" type="Sprite" parent="AttackAnimation/DefenceArmy"]
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 20 )
 
-[node name="Traveler57" type="Sprite" parent="Travelers"]
-z_index = 2
-texture = ExtResource( 3 )
-script = ExtResource( 4 )
-[connection signal="button_down" from="GUI/LowPart/TextureButton2" to="GUI/LowPart/TextureButton2" method="_on_TextureButton_button_down"]
-[connection signal="mouse_entered" from="GUI/LowPart/TextureButton2" to="GUI/LowPart/TextureButton2" method="_on_TextureButton_mouse_entered"]
-[connection signal="mouse_exited" from="GUI/LowPart/TextureButton2" to="GUI/LowPart/TextureButton2" method="_on_TextureButton_mouse_exited"]
+[node name="Emblem" type="Sprite" parent="AttackAnimation/DefenceArmy"]
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 21 )
+[connection signal="button_down" from="GUI/Control/Button1/TextureButton" to="GUI" method="_on_TextureButton1_button_down"]
+[connection signal="button_down" from="GUI/Control/Button2/TextureButton" to="GUI" method="_on_TextureButton2_button_down"]
+[connection signal="button_down" from="GUI/Control/Button3/TextureButton" to="GUI" method="_on_TextureButton3_button_down"]
+[connection signal="button_down" from="GUI/Menus/Control/RaidMenu/ConfirmButton/TextureButton" to="GUI" method="_on_ConfirmButton1_button_down"]
+[connection signal="animation_finished" from="GUI/TurnControl/AnimationPlayer" to="GUI/TurnControl" method="_on_AnimationPlayer_animation_finished"]
+[connection signal="button_down" from="GUI/TurnControl/Button/TextureButton" to="GUI/TurnControl" method="_on_NextTurn_button_down"]
+[connection signal="animation_finished" from="AttackAnimation" to="AttackAnimation" method="_on_AttackAnimation_animation_finished"]

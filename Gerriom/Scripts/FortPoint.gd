@@ -5,5 +5,3 @@ var target_point = Vector2(0,0)
 
 func _ready():
 	target_point = get_parent().get_parent().get_parent().get_node(neighbourArea + "/Center").position
-	print( target_point )
-	pass # Replace with function body.

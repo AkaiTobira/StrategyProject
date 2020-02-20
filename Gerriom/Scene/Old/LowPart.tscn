@@ -1,0 +1,161 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Scripts/MenuButton.gd" type="Script" id=1]
+[ext_resource path="res://Textures/GUI/LowInterface.png" type="Texture" id=2]
+[ext_resource path="res://Textures/GUI/button_hover.png" type="Texture" id=3]
+[ext_resource path="res://Resources/Fonts/rm_albion.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://Textures/GUI/Helper_Background.png" type="Texture" id=5]
+[ext_resource path="res://Textures/GUI/button.png" type="Texture" id=6]
+
+[sub_resource type="Animation" id=2]
+resource_name = "Show"
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureButton2:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.5, 0.6, 0.7, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 76.2122, 516.805 ), Vector2( 139.067, 513.157 ), Vector2( 216.922, 521.51 ), Vector2( 282.741, 530.09 ), Vector2( 412.272, 549.919 ), Vector2( 471.596, 558.369 ), Vector2( 527.41, 569.171 ), Vector2( 579.595, 574.609 ), Vector2( 679.78, 582.265 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("TextureButton:rect_position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( -631.011, 431.55 ), Vector2( -30, 431.55 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("TextureButton2:rect_rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 180.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("TextureButton2/Tip:rect_position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 45.2358, 33.2789 ), Vector2( 56.6675, 233.333 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("TextureButton2/Tip:rect_rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 180.0 ]
+}
+
+[sub_resource type="DynamicFont" id=3]
+size = 102
+outline_size = 1
+font_data = ExtResource( 4 )
+
+[node name="LowPart" type="Control"]
+margin_left = -39.0
+margin_top = 118.0
+margin_right = 1.0
+margin_bottom = 158.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Show = SubResource( 2 )
+
+[node name="TextureButton" type="TextureRect" parent="."]
+margin_left = -631.011
+margin_top = 431.55
+margin_right = 168.989
+margin_bottom = 731.551
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton2" type="TextureButton" parent="."]
+margin_left = 76.2122
+margin_top = 516.805
+margin_right = 194.212
+margin_bottom = 736.805
+rect_scale = Vector2( 0.3, 0.3 )
+texture_normal = ExtResource( 6 )
+texture_hover = ExtResource( 3 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "Cos"
+}
+
+[node name="Tip" type="Control" parent="TextureButton2"]
+visible = false
+margin_left = 45.2358
+margin_top = 33.2789
+margin_right = 85.2359
+margin_bottom = 73.2789
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect2" type="TextureRect" parent="TextureButton2/Tip"]
+modulate = Color( 0.321569, 0.219608, 0.219608, 1 )
+margin_left = 147.0
+margin_top = -15.9998
+margin_right = 847.0
+margin_bottom = 284.0
+rect_scale = Vector2( 0.806, 0.32 )
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="TextureButton2/Tip"]
+margin_left = 150.333
+margin_top = -12.6667
+margin_right = 850.333
+margin_bottom = 287.333
+rect_scale = Vector2( 0.797, 0.302 )
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="TextureButton2/Tip"]
+modulate = Color( 0, 0, 0, 1 )
+self_modulate = Color( 0.709804, 0.0509804, 0.0509804, 0.831373 )
+margin_left = 164.0
+margin_top = -5.0
+margin_right = 590.0
+margin_bottom = 64.0
+custom_fonts/font = SubResource( 3 )
+text = "Show/Hide  build menu."
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="button_down" from="TextureButton2" to="TextureButton2" method="_on_TextureButton_button_down"]
+[connection signal="mouse_entered" from="TextureButton2" to="TextureButton2" method="_on_TextureButton_mouse_entered"]
+[connection signal="mouse_exited" from="TextureButton2" to="TextureButton2" method="_on_TextureButton_mouse_exited"]

@@ -1,4 +1,4 @@
-extends Sprite
+extends Node2D
 
 var is_traveling = false
 var is_stopped   = true
@@ -10,8 +10,8 @@ var target_pos = Vector2(0,0)
 var SPEED = 500
 
 func _ready():
-	modulate = Color(randf(),randf(), 0)
 	position = get_world_navPoint().position
+	$Line2D.points[0] = Vector2(0,0)
 
 func get_world_navPoint():
 	var node = get_node("../../World/NavPoints")
@@ -21,8 +21,8 @@ func get_fort_position():
 	var node      = get_node("../../World/NavPoints")
 	var area      = node.get_node( current_area_name )
 	var forts     = area.get_node("Forts")
-	var next_fort = forts.get_child(randi()%forts.get_child_count())
-	return [ next_fort.position, next_fort.neighbourArea ]
+	var next_fort1 = forts.get_child(randi()%forts.get_child_count())
+	return [ next_fort1.position, next_fort1.neighbourArea ]
 
 func get_starting_area():
 	var node = get_node("../../World/NavPoints")
@@ -42,7 +42,6 @@ func get_next_travel_point():
 		current_area_name = next_fort[1]
 		next_fort = get_fort_position()
 		return new_position
-	
 
 func _process(delta):
 	if is_stopped:
@@ -50,16 +49,19 @@ func _process(delta):
 		is_traveling = true
 		is_stopped   = false
 		timer        = 0
-		
+		$Line2D.visible = false
+
 	if is_traveling:
 		timer += delta
 		if timer < breakk : return
+		$Line2D.visible = true
 		position += (target_pos - position).normalized() * SPEED * delta
+		$Line2D.points[1] = target_pos - position
 		if position.distance_to(target_pos) < 5 : 
 			position = target_pos
 			is_traveling = false
 			is_stopped   = true
 			timer        = 0
-		
+
 	if position.x < 0 : target_pos   = get_world_navPoint().position
 	if position.y < 0 : target_pos   = get_world_navPoint().position

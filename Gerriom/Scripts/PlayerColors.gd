@@ -2,8 +2,8 @@ extends Node
 
 var Colors = {
 	0 : {
-		"inactive" : Color( 0, 0.5, 0, 1 ),
-		"active"   : Color( 0, 0.75, 0, 1 )
+		"inactive" : Color( 0, 0, 0.5, 1 ),
+		"active"   : Color( 0, 0, 0.75, 1 )
 	},
 	1 : {
 		"inactive" : Color( 0.5,  0, 0, 1 ),
@@ -15,7 +15,7 @@ var Colors = {
 	},
 	3 : {
 		"inactive" : Color( 0.5,   0.5,  0.5, 1 ),
-		"active"   : Color( 0.75, 0.75,  0.75, 1 )
+		"active"   : Color( 1, 1,  1, 1 )
 	},
 	4 : {
 		"inactive" : Color( 0,   0.5,  0.5, 1 ),

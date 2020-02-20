@@ -1,0 +1,187 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Scripts/FortPoint.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/WorldTertitoryParser.gd" type="Script" id=2]
+[ext_resource path="res://Textures/Emblems/Fenix.png" type="Texture" id=3]
+[ext_resource path="res://Textures/Map/Area11.png" type="Texture" id=4]
+[ext_resource path="res://Textures/Map/map1.png" type="Texture" id=5]
+[ext_resource path="res://Textures/Map/Area24.png" type="Texture" id=12]
+[ext_resource path="res://Textures/Map/Area21.png" type="Texture" id=13]
+[ext_resource path="res://Textures/Map/Area25.png" type="Texture" id=16]
+[ext_resource path="res://Scripts/Territory.gd" type="Script" id=17]
+
+[node name="World" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="WorldMap" type="Sprite" parent="."]
+position = Vector2( 2364, 1621 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 5 )
+
+[node name="NavPoints" type="Node2D" parent="."]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Area1" type="Area2D" parent="NavPoints"]
+script = ExtResource( 17 )
+__meta__ = {
+"_edit_lock_": true
+}
+resources = [ 32, 12, 67, 321 ]
+resources_prodution = [ 3, 1, 6, 15 ]
+
+[node name="Center" type="Node2D" parent="NavPoints/Area1"]
+position = Vector2( 1879.01, 361.271 )
+
+[node name="Sprite" type="Sprite" parent="NavPoints/Area1"]
+position = Vector2( 1857, 750 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 4 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="NavPoints/Area1"]
+visible = false
+polygon = PoolVector2Array( 1440.27, 44.551, 2383.02, 57.8292, 2467.11, 411.912, 2174.99, 1022.71, 2055.49, 1044.84, 1900.58, 712.883, 1745.67, 947.464, 1865.17, 1310.4, 1723.54, 1452.03, 1533.22, 1376.79, 1227.82, 681.901 )
+
+[node name="Forts" type="Node2D" parent="NavPoints/Area1"]
+
+[node name="1" type="Node2D" parent="NavPoints/Area1/Forts"]
+position = Vector2( 1629.66, 1406.5 )
+script = ExtResource( 1 )
+neighbourArea = "Area3"
+
+[node name="3" type="Node2D" parent="NavPoints/Area1/Forts"]
+position = Vector2( 2114.16, 1042.4 )
+script = ExtResource( 1 )
+neighbourArea = "Area7"
+
+[node name="Emblem" type="Sprite" parent="NavPoints/Area1"]
+position = Vector2( 1884.81, 374.281 )
+scale = Vector2( 1.7, 1.7 )
+texture = ExtResource( 3 )
+
+[node name="Area2" type="Area2D" parent="NavPoints"]
+script = ExtResource( 17 )
+__meta__ = {
+"_edit_lock_": true
+}
+current_owner = 3
+resources = [ 32, 12, 67, 321 ]
+resources_prodution = [ 3, 1, 6, 15 ]
+
+[node name="Center" type="Node2D" parent="NavPoints/Area2"]
+position = Vector2( 1056.84, 1576.91 )
+
+[node name="Sprite" type="Sprite" parent="NavPoints/Area2"]
+position = Vector2( 990.793, 1846.89 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 12 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="NavPoints/Area2"]
+polygon = PoolVector2Array( 1516.97, 1465.69, 1378.96, 1765.19, 1191.04, 1727.02, 1058.9, 1888.52, 967.877, 1985.42, 926.768, 2264.37, 894.469, 2440.55, 868.042, 2478.72, 480.448, 2232.07, 459.894, 2061.76, 424.658, 1800.43, 565.601, 1677.1, 747.653, 1618.38, 774.08, 1418.71, 1061.84, 1224.91 )
+
+[node name="Emblem" type="Sprite" parent="NavPoints/Area2"]
+position = Vector2( 1879.4, 362.548 )
+scale = Vector2( 1.7, 1.7 )
+texture = ExtResource( 3 )
+
+[node name="Forts" type="Node2D" parent="NavPoints/Area2"]
+
+[node name="1" type="Node2D" parent="NavPoints/Area2/Forts"]
+position = Vector2( 1430.02, 1623.79 )
+script = ExtResource( 1 )
+neighbourArea = "Area3"
+
+[node name="Area3" type="Area2D" parent="NavPoints"]
+script = ExtResource( 17 )
+__meta__ = {
+"_edit_lock_": true
+}
+current_owner = 1
+
+[node name="Center" type="Node2D" parent="NavPoints/Area3"]
+position = Vector2( 1580.1, 1827.96 )
+
+[node name="Emblem" type="Sprite" parent="NavPoints/Area3"]
+position = Vector2( 1879.4, 362.548 )
+scale = Vector2( 1.7, 1.7 )
+texture = ExtResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="NavPoints/Area3"]
+position = Vector2( 1620.16, 2044.08 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 16 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="NavPoints/Area3"]
+polygon = PoolVector2Array( 1777.24, 2667.97, 1699.13, 2400.17, 1584.76, 2302.54, 1682.4, 2179.8, 1819.08, 1948.27, 2056.19, 1747.43, 1908.35, 1607.95, 1746.56, 1647, 1668.45, 1577.27, 1718.66, 1440.58, 1559.66, 1373.63, 1537.48, 1472.91, 1361.6, 1800.43, 1216.55, 2023.59, 1141.23, 2383.44, 1289.08, 2628.91, 1565.24, 2720.97 )
+
+[node name="Forts" type="Node2D" parent="NavPoints/Area3"]
+
+[node name="1" type="Node2D" parent="NavPoints/Area3/Forts"]
+position = Vector2( 1629.66, 1406.5 )
+script = ExtResource( 1 )
+neighbourArea = "Area1"
+
+[node name="2" type="Node2D" parent="NavPoints/Area3/Forts"]
+position = Vector2( 1995.35, 1681.17 )
+script = ExtResource( 1 )
+neighbourArea = "Area7"
+
+[node name="3" type="Node2D" parent="NavPoints/Area3/Forts"]
+position = Vector2( 1443.32, 1643 )
+script = ExtResource( 1 )
+neighbourArea = "Area2"
+
+[node name="Area7" type="Area2D" parent="NavPoints"]
+script = ExtResource( 17 )
+__meta__ = {
+"_edit_lock_": true
+}
+current_owner = 2
+
+[node name="Center" type="Node2D" parent="NavPoints/Area7"]
+position = Vector2( 2175.84, 1344.83 )
+
+[node name="Sprite" type="Sprite" parent="NavPoints/Area7"]
+position = Vector2( 2209.17, 1381.03 )
+scale = Vector2( 3, 3 )
+texture = ExtResource( 13 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="NavPoints/Area7"]
+polygon = PoolVector2Array( 2052.89, 1725.5, 2466.92, 1643.29, 2487.47, 1481.79, 2343.59, 1349.65, 2446.36, 1223.39, 2408.19, 1103, 2276.06, 1105.94, 2179.16, 1014.91, 2038.21, 1047.21, 1935.44, 1323.23, 2035.28, 1431.87, 1917.82, 1616.86 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Forts" type="Node2D" parent="NavPoints/Area7"]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="1" type="Node2D" parent="NavPoints/Area7/Forts"]
+position = Vector2( 2118.54, 1047.48 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+neighbourArea = "Area1"
+
+[node name="3" type="Node2D" parent="NavPoints/Area7/Forts"]
+position = Vector2( 1979.14, 1670.63 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+neighbourArea = "Area3"
+
+[node name="Emblem" type="Sprite" parent="NavPoints/Area7"]
+position = Vector2( 908.366, 872.584 )
+scale = Vector2( 1.7, 1.7 )
+texture = ExtResource( 3 )
+[connection signal="area_entered" from="NavPoints/Area1" to="NavPoints/Area1" method="_on_Area_area_entered"]
+[connection signal="area_entered" from="NavPoints/Area2" to="NavPoints/Area2" method="_on_Area_area_entered"]
+[connection signal="area_entered" from="NavPoints/Area3" to="NavPoints/Area3" method="_on_Area_area_entered"]
+[connection signal="area_entered" from="NavPoints/Area7" to="NavPoints/Area7" method="_on_Area_area_entered"]
