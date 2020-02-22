@@ -37,8 +37,6 @@ func parse():
 	remove_dupplicants()
 
 func update_player_territory_info():
-	#print( playerTerritoryInfo )
 	parse()
 	PlayerInfo.player_info = playerTerritoryInfo
-	#print( playerTerritoryInfo )
 	return playerTerritoryInfo

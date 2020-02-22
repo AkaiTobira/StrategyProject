@@ -13,6 +13,9 @@ func update():
 	$NextEmblem.modulate.a = 0
 
 func _on_NextTurn_button_down():
+	UIHandle.deactivate_territory()
+	get_parent().hide_menu()
+	get_parent().hide_options()
 
 	var anim  = $AnimationPlayer.get_animation( "Switch" )
 	

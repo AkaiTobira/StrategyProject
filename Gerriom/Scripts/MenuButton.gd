@@ -1,5 +1,7 @@
 extends "res://Scripts/OnHooverTips.gd"
 
+#UNUSUED NOW
+
 var state = 0
 
 func show_menu():

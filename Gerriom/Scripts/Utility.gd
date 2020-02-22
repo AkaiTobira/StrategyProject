@@ -1,6 +1,7 @@
 extends Node
 
 var mouse_clicker_node 
+var mouse_unit_move_marker
 var lock_menu_actions = false
 
 
