@@ -4,6 +4,8 @@ var player_id   = 0
 var gold        = 1000
 var player_info = {}
 
+var is_player_attacking = false
+
 var attacked_territory = null
 var attacker_id        = -1
 
@@ -32,9 +34,9 @@ var armies = {
 		2 : {
 			"name"  : "Kiryou Cross",
 			"tags"  : ["Archer", "Driad", "Range1"],
-			"race"  : "Human",
+			"race"  : "Driad",
 			"stats" : { "str" : 7,   "def" : 2,  "int" : 2  },
-			"amout" : { "max" : 150, "curr" : 150} 
+			"amout" : { "max" : 150, "curr" : 23} 
 		},
 		3 : {
 			"name"  : "Gerryu Rei",
@@ -77,13 +79,13 @@ func generate_enemy_army():
 	var commander_id = 0
 	for army in range( 5 ):
 		if army == 0 : continue
-		for unit in range( (randi() % 5) + 2):
+		for unit in range( (randi() % 5) + 5):
 			var new_unit = {}
 			new_unit[ "name" ]  = "RandomlyGeneratedUnit " + str(commander_id)
 			new_unit[ "type" ]  = unit_types[ randi()%len(unit_types) ]
 			new_unit[ "race" ]  = races[ randi()%len(races) ]
 			new_unit["tags"]    = [ new_unit[ "type" ], new_unit[ "race" ], traits[ randi()%len(traits) ] ]
-			new_unit["stats"]   = { "str" : randi()%11, "def" : randi()%11, "int" : randi()%11 }
+			new_unit["stats"]   = { "str" : randi()%11, "def" : randi()%11, "int" : max(randi()%11,1) }
 			var number_of_units = randi()%701
 			new_unit["amout"]   = { "max" : number_of_units, "curr" : number_of_units} 
 			armies[army][unit]  = new_unit

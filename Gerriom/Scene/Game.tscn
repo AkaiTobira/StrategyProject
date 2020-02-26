@@ -136,7 +136,6 @@ var ARMY_SIZE     = 5
 var army_capacity      = 0
 var commander_capacity = 0
 
-
 func create_army_holdes():
 	for i in range( ARMY_SIZE ):
 		for j in range( ARMY_SIZE ):
@@ -149,6 +148,12 @@ func create_army_holdes():
 func _ready():
 	create_army_holdes()
 	clear()
+
+func refresh_holder( unit_id ):
+	if not army_positions.has( unit_id ): return
+	else :
+		var holder = get_child(posToIndex( army_positions[unit_id] ))
+		holder.fill_holder( PlayerInfo.armies[0][unit_id],  unit_id )
 
 func clear_holders():
 	for child in get_children():
@@ -182,7 +187,6 @@ func swap_units( unit, unit_id, unit_id_new, position):
 	if old_position : _set_unit( old_position, unit_id, PlayerInfo.armies[0][unit_id])
 
 func _remove_unit_position( unit_id):
-	print( unit_id )
 	var holder = get_child(posToIndex( army_positions[unit_id] ))
 	holder.clear_holder()
 	army_positions.erase(unit_id)
@@ -790,13 +794,50 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ReplenishButton2" type="Control" parent="GUI/Menus/Control/RaidMenu"]
+margin_left = 412.0
+margin_top = -539.0
+margin_right = 452.0
+margin_bottom = -499.0
+script = ExtResource( 30 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" type="TextureButton" parent="GUI/Menus/Control/RaidMenu/ReplenishButton2"]
+margin_left = 1349.53
+margin_top = 587.923
+margin_right = 1555.53
+margin_bottom = 660.923
+rect_scale = Vector2( 0.726, 0.6 )
+texture_normal = ExtResource( 19 )
+texture_pressed = ExtResource( 17 )
+texture_hover = ExtResource( 18 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="GUI/Menus/Control/RaidMenu/ReplenishButton2"]
+anchor_left = 0.087
+anchor_top = 0.2
+anchor_right = 0.087
+anchor_bottom = 0.2
+margin_left = 1335.06
+margin_top = 582.768
+margin_right = 1511.06
+margin_bottom = 665.768
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "Replenish"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="UnitPreviev" type="Control" parent="GUI/Menus/Control/RaidMenu"]
 margin_right = 40.0
 margin_bottom = 40.0
 script = ExtResource( 25 )
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="TextureRect" type="TextureRect" parent="GUI/Menus/Control/RaidMenu/UnitPreviev"]
 modulate = Color( 1, 1, 1, 0.729412 )
@@ -1312,6 +1353,7 @@ texture = ExtResource( 21 )
 [connection signal="button_down" from="GUI/Menus/Control/RaidMenu/UnitList/List/Control/TextureButton2" to="GUI/Menus/Control/RaidMenu/UnitList/List/Control" method="_on_TextureButton2_button_down"]
 [connection signal="mouse_entered" from="GUI/Menus/Control/RaidMenu/UnitList/List/Control/TextureButton2" to="GUI/Menus/Control/RaidMenu/UnitList/List/Control" method="_on_TextureButton2_mouse_entered"]
 [connection signal="button_down" from="GUI/Menus/Control/RaidMenu/ConfirmButton/TextureButton" to="GUI/Menus/Control/RaidMenu/ConfirmButton" method="_on_ConfirmButton1_button_down"]
+[connection signal="button_down" from="GUI/Menus/Control/RaidMenu/ReplenishButton2/TextureButton" to="GUI/Menus/Control/RaidMenu/ReplenishButton2" method="_on_ReplenishButton_button_down"]
 [connection signal="button_down" from="GUI/Menus/Control/RaidMenu/ArmyPreviev/ArmyPart/ClicablePart/ArmyPlaces/Control/Back" to="GUI/Menus/Control/RaidMenu/ArmyPreviev/ArmyPart/ClicablePart/ArmyPlaces/Control" method="_on_Back_button_down"]
 [connection signal="mouse_entered" from="GUI/Menus/Control/RaidMenu/ArmyPreviev/ArmyPart/ClicablePart/ArmyPlaces/Control/Back" to="GUI/Menus/Control/RaidMenu/ArmyPreviev/ArmyPart/ClicablePart/ArmyPlaces/Control" method="_on_ArmyUnitHolder_mouse_entered"]
 [connection signal="mouse_exited" from="GUI/Menus/Control/RaidMenu/ArmyPreviev/ArmyPart/ClicablePart/ArmyPlaces/Control/Back" to="GUI/Menus/Control/RaidMenu/ArmyPreviev/ArmyPart/ClicablePart/ArmyPlaces/Control" method="_on_ArmyUnitHolder_mouse_exited"]

@@ -27,10 +27,13 @@ func check_commander_part():
 		
 func check_if_outside() :
 	if Utils.mouse_unit_move_marker.from_unit_list: return
+	if  Utils.mouse_unit_move_marker.position == Vector2(-1000, -1000): return
 	var angry_rect_wow_wow = $ArmyPart/Disabled.get_rect()
 	angry_rect_wow_wow.position += Utils.GUI_control_node.rect_position
+	print( angry_rect_wow_wow,  Utils.mouse_unit_move_marker.position)
 	if not angry_rect_wow_wow.has_point( Utils.mouse_unit_move_marker.position ):
-		$ArmyPart/ClicablePart/ArmyPlaces.remove_unit( Utils.mouse_unit_move_marker.active_unit_id )
+		
+		$ArmyPart/ClicablePart/ArmyPlaces.remove_unit_from_board( Utils.mouse_unit_move_marker.active_unit_id )
 		return true
 	return false
 
@@ -41,3 +44,5 @@ func _input(event):
 			if check_commander_part(): return
 			if check_if_outside(): return
 
+func refresh_holder( unit_id ):
+	$ArmyPart/ClicablePart/ArmyPlaces.refresh_holder(unit_id)

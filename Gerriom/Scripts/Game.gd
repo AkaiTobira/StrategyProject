@@ -48,8 +48,32 @@ func make_AI_move():
 	if len(UIHandle.move_queue) <= 1: return
 	atak_neighbour()
 
+func generate_atack_army( player ):
+	var army = {}
+	var number_of_units = len( PlayerInfo.armies[player])
+	var commander_id = randi()%number_of_units
+	var commander = PlayerInfo.armies[player][ commander_id ]
+	var army_cap  = min( commander["stats"]["int"], number_of_units)
+#	print(commander["stats"]["int"], " ", number_of_units, " army Cap", army_cap)
+	var units     = PlayerInfo.armies[player].keys()
+	
+	var army_size = max( randi() % (army_cap), 2)
+	army[commander_id] = Vector2(0,0)
+	for i in range( army_size ):
+		var random_unit = randi()%number_of_units
+		while random_unit in army.keys(): random_unit = randi()%number_of_units
+		army[random_unit] = Vector2(0,0)
+	return army
+
 func atak_neighbour():
 	var can_attack = PlayerInfo.player_info[UIHandle.get_active_player()]["can_attack"]
 	var enemy = can_attack[ randi()%len(can_attack)]
+	
+	UIHandle.army_owner1 = UIHandle.get_active_player()
+	UIHandle.enemy_army1 = generate_atack_army(UIHandle.army_owner1)
+	UIHandle.army_owner2 = get_node("World/NavPoints/" + enemy).current_owner
+	UIHandle.enemy_army2 = generate_atack_army(UIHandle.army_owner2)
+	
+	#print(UIHandle.enemy_army1, " ", UIHandle.enemy_army2)
 	$AttackAnimation.play_invade_animation( UIHandle.get_active_player(), get_node("World/NavPoints/" + enemy).current_owner, enemy )
 

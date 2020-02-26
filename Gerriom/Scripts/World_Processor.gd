@@ -2,6 +2,12 @@ extends Node
 
 var move_queue       = []
 var active_territory = null
+var selected_army    = {}
+var enemy_army1      = {}
+var enemy_army2      = {}
+
+var army_owner1 = -1
+var army_owner2 = -1
 
 func set_active_territory( territory ):
 	if active_territory :

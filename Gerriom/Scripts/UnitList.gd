@@ -20,6 +20,11 @@ func build_unit_holders():
 		new_holder.get_node("Arg1").text = str(i)
 		$List.add_child(new_holder)
 
+func refresh_holder(unit_id):
+	for child in $List.get_children():
+		if child._unit_id == unit_id: 
+			fill_label(child, unit_id) 
+
 func load_units( must_have_trait ):
 	
 	var unit_to_show = []

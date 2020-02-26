@@ -56,16 +56,44 @@ func animation_set( points ):
 	anim.track_set_key_value( pos_track2, 0, points[2])
 	anim.track_set_key_value( pos_track2, 1, points[3])
 
+func get_race_multipler( race ):
+	match(race):
+		"Unknown" : return 1.7
+		"Gerrion" : return 30
+		"Human"   : return 1
+		"Demigod" : return 1.6
+		"Driad"   : return 1.2
+		"Mage"    : return 1
+		_ : return 1
+
+func calculate_army_force( army, ownerw ):
+	var power = 0
+	var stree = ""
+	for unit in army.keys():
+		var race_multipler = get_race_multipler(PlayerInfo.armies[ownerw][unit]["race"])
+		stree +=  PlayerInfo.armies[ownerw][unit]["race"] + " : "
+		power += PlayerInfo.armies[ownerw][unit]["amout"]["curr"] * race_multipler
+	print( stree )
+	return power
+
+func get_luck_multipler():
+	return min( (randf()* 0.1) + 0.9, 1.0)
+
 func _on_AttackAnimation_animation_finished(anim_name):
 	if anim_name == "Invade":
 		Utils.lock_menu_actions = false
+		var luck = [ get_luck_multipler(), get_luck_multipler() ]
+		var army1_force = calculate_army_force( UIHandle.enemy_army1, UIHandle.army_owner1) * luck[0]
+		var army2_force = calculate_army_force( UIHandle.enemy_army2, UIHandle.army_owner2) * luck[1]
 		
-		if randi()%100 < 25:
+		print( army1_force," ", army2_force, " : ", luck )
+		
+		if army1_force > army2_force:
 			var previous_owner = PlayerInfo.attacked_territory.current_owner
 			PlayerInfo.attacked_territory.change_owner( PlayerInfo.attacker_id )
 			get_node("../World").update_player_territory_info()
 			if not PlayerInfo.player_info.has(previous_owner):
 				UIHandle.move_queue.erase( previous_owner )
-		if UIHandle.get_active_player() != PlayerInfo.player_id:
-			get_node("../GUI/TurnControl")._on_NextTurn_button_down()
+		#if UIHandle.get_active_player() != PlayerInfo.player_id:
+		get_node("../GUI/TurnControl")._on_NextTurn_button_down()
 	pass # Replace with function body.
