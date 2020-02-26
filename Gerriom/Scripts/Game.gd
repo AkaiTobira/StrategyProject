@@ -12,6 +12,8 @@ func _input(event):
 func _ready():
 	Utils.mouse_clicker_node     = $MouseButtonMarker
 	Utils.mouse_unit_move_marker = $GUI/UnitMoverMarker
+	Utils.GUI_control_node       = $GUI/Menus/Control
+	Utils.GUI_UnitPreviev_node   = $GUI/Menus/Control/RaidMenu/UnitPreviev
 
 func on_disable_opstions(): pass
 

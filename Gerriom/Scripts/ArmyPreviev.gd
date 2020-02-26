@@ -18,5 +18,7 @@ func _input(event):
 			var angry_rect_wow_wow = $CommanderPart/TextureRect2.get_rect()
 			angry_rect_wow_wow.position += get_parent().get_parent().rect_position
 			if angry_rect_wow_wow.has_point( Utils.mouse_unit_move_marker.position ):
-				$CommanderPart.set_commander( get_parent().unit_list[Utils.mouse_unit_move_marker.active_unit_id])
+				var unit = get_parent().unit_list[Utils.mouse_unit_move_marker.active_unit_id]
+				$CommanderPart.set_commander( unit )
 				$ArmyPart.enable()
+				$ArmyPart.place_commander( unit, Utils.mouse_unit_move_marker.active_unit_id )

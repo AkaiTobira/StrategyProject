@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=2]
+[gd_scene load_steps=50 format=2]
 
 [ext_resource path="res://Scene/WorldSandbox.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Textures/GUI/B3.png" type="Texture" id=2]
@@ -31,6 +31,8 @@
 [ext_resource path="res://Textures/GUI/Interface_Background_disabled.png" type="Texture" id=29]
 [ext_resource path="res://Scripts/InvadeConfirmButton.gd" type="Script" id=30]
 [ext_resource path="res://Scripts/UnitList.gd" type="Script" id=31]
+[ext_resource path="res://Scene/ArmyHolder.gd" type="Script" id=32]
+[ext_resource path="res://Resources/Fonts/rm_albion.ttf" type="DynamicFontData" id=33]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 26.2114
@@ -65,22 +67,10 @@ var _unit_id   = 0
 func _on_TextureButton2_mouse_entered():
 	get_node(\"../../../UnitPreviev\").fill_preview( _unit_id )
 
-func _input(event):
-	if not Utils.mouse_unit_move_marker.is_active: return
-	if event is InputEventMouseMotion:
-		Utils.mouse_unit_move_marker.position = get_viewport().get_mouse_position()#get_global_mouse_position()
-	
-	if event is InputEventMouseButton:
-		if not event.is_pressed() and event.button_index == BUTTON_LEFT:
-			Utils.mouse_unit_move_marker.position  = Vector2(-1000, -1000)
-			Utils.mouse_unit_move_marker.is_active = false
-			Utils.mouse_unit_move_marker.pressed_button = null
-
 func _on_TextureButton2_button_down():
 	Utils.mouse_unit_move_marker.is_active      = true
 	Utils.mouse_unit_move_marker.active_unit_id = _unit_id
 	Utils.mouse_unit_move_marker.pressed_button = self
-	pass # Replace with function body.
 "
 
 [sub_resource type="DynamicFontData" id=6]
@@ -101,32 +91,104 @@ func clear():
 	$DragCommander.visible = true
 	$Const.visible         = false
 	$Const2.visible        = false
-	$Const3.visible        = false
+	$Filled.visible        = false
+	$Filled2.visible       = false
 	$CommanderName.visible = false
 
 func set_commander( unit ):
 	$DragCommander.visible = false
 	$Const.visible         = true
 	$Const2.visible        = true
-	$Const3.visible        = true
+	$Filled.visible        = true
+	$Filled2.visible       = true
 	$CommanderName.visible = true
 
 	$CommanderName.text = unit[\"name\"]
+	
+	$Filled.text  = \" / \" + str(min(unit[\"stats\"][\"int\"], 25))
+	$Filled2.text = str(1) + \" \"
+	
 "
 
 [sub_resource type="GDScript" id=10]
 script/source = "extends Control
 
-func _ready():
-	
-	for i in range( 5 ):
-		for j in range( 5 ):
-			var node = $TextureRect3.duplicate()
+var army_posiiton = {}
+var order_of_add  = []
+var commander_id  = -1
+
+var MIDDLE_POS    = Vector2(2,2)
+var ARMY_SIZE     = 5
+
+func create_army_holdes():
+	for i in range( ARMY_SIZE ):
+		for j in range( ARMY_SIZE ):
+			var node = $Control.duplicate()
 			node.rect_position += Vector2( i * 92, j * 62 )
+			node.army_position  = Vector2( i, j)
 			add_child(node)
-			
-	$TextureRect3.queue_free()
+	$Control.queue_free()
+
+func _ready():
+	create_army_holdes()
+	clear()
+
+func clear_holders():
+	for child in get_children():
+		child.clear_holder()
+
+func clear():
+	army_posiiton = {}
+	order_of_add  = []
+	commander_id  = -1
+	clear_holders()
+
+func posToIndex( vec ):
+	return (vec.x *ARMY_SIZE  + vec.y ) 
+
+func replace_unit( unit, unit_id, unit_id_new, position):
+	var old_position = null
+	if army_posiiton.has(unit_id): old_position = army_posiiton[unit_id_new]
+	if army_posiiton.has(unit_id):     _remove_unit( unit_id )
+	if army_posiiton.has(unit_id_new): _remove_unit( unit_id_new )
+	_set_unit( position, unit_id_new, unit)
+	if old_position : _set_unit( old_position, unit_id, PlayerInfo.armies[0][unit_id])
+
+func _remove_unit( unit_id):
+	var commander_node = get_child(posToIndex( army_posiiton[unit_id] ))
+	commander_node.clear_holder()
+	army_posiiton.erase(unit_id)
+	order_of_add.erase(unit_id)
+
+func _set_unit( position, unit_id, unit ):
+	army_posiiton[unit_id] = position
+	order_of_add.push_back(unit_id)
+	var commander_node = get_child(posToIndex( army_posiiton[unit_id] ))
+	commander_node.fill_holder( unit,  unit_id )
+
+func place_unit( unit, unit_id, position):
+	if army_posiiton.has(unit_id): _remove_unit( unit_id )
+	_set_unit( position, unit_id, unit)
+
+func place_commander(unit, unit_id):
+	var commander_position = MIDDLE_POS
+	if army_posiiton.has(commander_id): commander_position = army_posiiton[commander_id]
+	replace_unit( unit, commander_id, unit_id, commander_position)
+	commander_id = unit_id
+	get_child(posToIndex( MIDDLE_POS )).unit_id = unit_id
 "
+
+[sub_resource type="DynamicFont" id=14]
+size = 56
+font_data = ExtResource( 33 )
+
+[sub_resource type="DynamicFont" id=15]
+size = 37
+font_data = ExtResource( 33 )
+
+[sub_resource type="DynamicFont" id=16]
+size = 37
+font_data = ExtResource( 33 )
 
 [sub_resource type="Animation" id=11]
 length = 2.0
@@ -159,6 +221,7 @@ tracks/1/keys = {
 script/source = "extends Area2D
 
 var is_active      = false
+var binded_unit    = {}
 var active_unit_id = -1 
 var pressed_button = null
 "
@@ -218,6 +281,7 @@ tracks/3/keys = {
 script = ExtResource( 5 )
 
 [node name="World" parent="." instance=ExtResource( 1 )]
+position = Vector2( -64.6636, -66.4599 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2( 1781.86, 661.179 )
@@ -551,7 +615,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect" type="TextureRect" parent="GUI/Menus/Control/RaidMenu/UnitList/List/Control"]
+[node name="Type" type="TextureRect" parent="GUI/Menus/Control/RaidMenu/UnitList/List/Control"]
 margin_left = 1976.75
 margin_top = 55.9695
 margin_right = 2027.75
@@ -690,8 +754,8 @@ __meta__ = {
 [node name="Const" type="Label" parent="GUI/Menus/Control/RaidMenu/UnitPreviev"]
 margin_left = 1352.0
 margin_top = 60.0
-margin_right = 1392.0
-margin_bottom = 80.0
+margin_right = 1524.0
+margin_bottom = 88.0
 custom_fonts/font = SubResource( 7 )
 text = "Commander Name :"
 __meta__ = {
@@ -763,12 +827,23 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Const3" type="Label" parent="GUI/Menus/Control/RaidMenu/ArmyPreviev/CommanderPart"]
+[node name="Filled" type="Label" parent="GUI/Menus/Control/RaidMenu/ArmyPreviev/CommanderPart"]
 margin_left = 1794.62
 margin_top = 516.876
 margin_right = 1929.62
 margin_bottom = 530.876
-text = "0/5"
+text = " / 5"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Filled2" type="Label" parent="GUI/Menus/Control/RaidMenu/ArmyPreviev/CommanderPart"]
+margin_left = 1783.62
+margin_top = 516.876
+margin_right = 1918.62
+margin_bottom = 530.876
+text = "0"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -845,7 +920,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect3" type="TextureButton" parent="GUI/Menus/Control/RaidMenu/ArmyPreviev/ArmyPart/ClicablePart/ArmyPlaces"]
+[node name="Control" type="Control" parent="GUI/Menus/Control/RaidMenu/ArmyPreviev/ArmyPart/ClicablePart/ArmyPlaces"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 32 )
+
+[node name="Back2" type="TextureButton" parent="GUI/Menus/Control/RaidMenu/ArmyPreviev/ArmyPart/ClicablePart/ArmyPlaces/Control"]
 modulate = Color( 1, 1, 1, 0.729412 )
 margin_left = 1334.0
 margin_top = 312.0
@@ -853,6 +933,92 @@ margin_right = 1425.0
 margin_bottom = 373.0
 texture_normal = ExtResource( 18 )
 expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Fill" type="TextureRect" parent="GUI/Menus/Control/RaidMenu/ArmyPreviev/ArmyPart/ClicablePart/ArmyPlaces/Control"]
+margin_left = 1340.58
+margin_top = 314.358
+margin_right = 1396.58
+margin_bottom = 370.358
+texture = ExtResource( 11 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Back" type="TextureButton" parent="GUI/Menus/Control/RaidMenu/ArmyPreviev/ArmyPart/ClicablePart/ArmyPlaces/Control"]
+modulate = Color( 1, 1, 1, 0.729412 )
+margin_left = 1334.0
+margin_top = 312.0
+margin_right = 1425.0
+margin_bottom = 373.0
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Name" type="Label" parent="GUI/Menus/Control/RaidMenu/ArmyPreviev/ArmyPart/ClicablePart/ArmyPlaces/Control"]
+margin_left = 1337.49
+margin_top = 308.978
+margin_right = 1377.49
+margin_bottom = 347.978
+custom_fonts/font = SubResource( 14 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "XX"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Name2" type="Label" parent="GUI/Menus/Control/RaidMenu/ArmyPreviev/ArmyPart/ClicablePart/ArmyPlaces/Control"]
+margin_left = 1353.78
+margin_top = 335.935
+margin_right = 1393.78
+margin_bottom = 374.935
+custom_fonts/font = SubResource( 14 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "XX"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Count" type="Label" parent="GUI/Menus/Control/RaidMenu/ArmyPreviev/ArmyPart/ClicablePart/ArmyPlaces/Control"]
+margin_left = 1395.97
+margin_top = 329.775
+margin_right = 1435.97
+margin_bottom = 355.775
+custom_fonts/font = SubResource( 15 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "XX"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Count2" type="Label" parent="GUI/Menus/Control/RaidMenu/ArmyPreviev/ArmyPart/ClicablePart/ArmyPlaces/Control"]
+margin_left = 1395.97
+margin_top = 348.775
+margin_right = 1435.97
+margin_bottom = 374.775
+custom_fonts/font = SubResource( 15 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "XX"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Const" type="Label" parent="GUI/Menus/Control/RaidMenu/ArmyPreviev/ArmyPart/ClicablePart/ArmyPlaces/Control"]
+margin_left = 1395.97
+margin_top = 339.775
+margin_right = 1435.97
+margin_bottom = 365.775
+custom_fonts/font = SubResource( 16 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "---"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1085,6 +1251,9 @@ texture = ExtResource( 21 )
 [connection signal="button_down" from="GUI/Menus/Control/RaidMenu/UnitList/List/Control/TextureButton2" to="GUI/Menus/Control/RaidMenu/UnitList/List/Control" method="_on_TextureButton2_button_down"]
 [connection signal="mouse_entered" from="GUI/Menus/Control/RaidMenu/UnitList/List/Control/TextureButton2" to="GUI/Menus/Control/RaidMenu/UnitList/List/Control" method="_on_TextureButton2_mouse_entered"]
 [connection signal="button_down" from="GUI/Menus/Control/RaidMenu/ConfirmButton/TextureButton" to="GUI/Menus/Control/RaidMenu/ConfirmButton" method="_on_ConfirmButton1_button_down"]
+[connection signal="button_down" from="GUI/Menus/Control/RaidMenu/ArmyPreviev/ArmyPart/ClicablePart/ArmyPlaces/Control/Back" to="GUI/Menus/Control/RaidMenu/ArmyPreviev/ArmyPart/ClicablePart/ArmyPlaces/Control" method="_on_Back_button_down"]
+[connection signal="mouse_entered" from="GUI/Menus/Control/RaidMenu/ArmyPreviev/ArmyPart/ClicablePart/ArmyPlaces/Control/Back" to="GUI/Menus/Control/RaidMenu/ArmyPreviev/ArmyPart/ClicablePart/ArmyPlaces/Control" method="_on_ArmyUnitHolder_mouse_entered"]
+[connection signal="mouse_exited" from="GUI/Menus/Control/RaidMenu/ArmyPreviev/ArmyPart/ClicablePart/ArmyPlaces/Control/Back" to="GUI/Menus/Control/RaidMenu/ArmyPreviev/ArmyPart/ClicablePart/ArmyPlaces/Control" method="_on_ArmyUnitHolder_mouse_exited"]
 [connection signal="animation_finished" from="GUI/TurnControl/AnimationPlayer" to="GUI/TurnControl" method="_on_AnimationPlayer_animation_finished"]
 [connection signal="button_down" from="GUI/TurnControl/Button/TextureButton" to="GUI/TurnControl" method="_on_NextTurn_button_down"]
 [connection signal="animation_finished" from="AttackAnimation" to="AttackAnimation" method="_on_AttackAnimation_animation_finished"]

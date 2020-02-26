@@ -36,6 +36,7 @@ func load_units( must_have_trait ):
 
 func fill_label(child, unit_index):
 	child._unit_id = unit_index
+	child.get_node("Type").texture = Utils.get_mark( unit_list[child._unit_id]["tags"][0] )
 	child.get_node("Name").text = unit_list[child._unit_id]["name"]
 	child.get_node("Arg1").text = str(unit_list[child._unit_id]["stats"]["str"])
 	child.get_node("Arg2").text = str(unit_list[child._unit_id]["stats"]["def"])

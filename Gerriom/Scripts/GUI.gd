@@ -36,12 +36,13 @@ func show_options(options):
 		buttons_actions[button_id]    = get_action_id(options[button_id])
 
 func hide_options():
+	
 	for button_id in $Control.get_child_count():
 		var button = $Control.get_child(button_id)
 		button.visible = false
 
 func show_menu( menu_id ):
-
+	Utils.lock_menu_actions = true
 	#Hide currenlty active Menu
 	for child in $Menus/Control.get_children():
 		child.visible = false
@@ -60,6 +61,7 @@ func _input(event):
 
 func hide_menu():
 	if is_menu_hided: return
+	Utils.lock_menu_actions = false
 	is_menu_hided = true
 	hide_options()
 	$Menus/AnimationPlayer.play_backwards("Show")
