@@ -34,21 +34,25 @@ func _input(event):
 
 func add_to_army():
 	var unit = PlayerInfo.armies[0][Utils.mouse_unit_move_marker.active_unit_id]
-	if unit_id == -1 : 
+
+	if Utils.mouse_unit_move_marker.from_unit_list:
 		get_parent().place_unit(unit, 
 								Utils.mouse_unit_move_marker.active_unit_id, 
 								army_position)
-	else :
-		get_parent().replace_unit(unit, 
+	else:
+		get_parent().swap_units(unit, 
 								unit_id,
 								Utils.mouse_unit_move_marker.active_unit_id, 
 								army_position)
-	unit_id = Utils.mouse_unit_move_marker.active_unit_id
+
 
 func _on_TextureButton2_button_down():
 	if unit_id == -1 : return
 	Utils.mouse_unit_move_marker.is_active      = true
 	Utils.mouse_unit_move_marker.active_unit_id = unit_id
+	Utils.mouse_unit_move_marker.from_unit_list = false
+	var mark = Utils.get_mark(PlayerInfo.armies[0][unit_id]["tags"][0])
+	Utils.mouse_unit_move_marker.get_node("Sprite").texture = mark
 
 func _on_ArmyUnitHolder_mouse_entered():
 	if unit_id == -1 : return
@@ -62,3 +66,6 @@ func _on_Back_button_down():
 	if unit_id == -1 : return
 	Utils.mouse_unit_move_marker.is_active      = true
 	Utils.mouse_unit_move_marker.active_unit_id = unit_id
+	Utils.mouse_unit_move_marker.from_unit_list = false
+	var mark = Utils.get_mark(PlayerInfo.armies[0][unit_id]["tags"][0])
+	Utils.mouse_unit_move_marker.get_node("Sprite").texture = mark

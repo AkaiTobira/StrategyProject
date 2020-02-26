@@ -14,3 +14,4 @@ func enable():
 
 func place_commander(unit, unit_id): 
 	$ClicablePart/ArmyPlaces.place_commander( unit ,unit_id )
+

@@ -70,7 +70,9 @@ func _on_TextureButton2_mouse_entered():
 func _on_TextureButton2_button_down():
 	Utils.mouse_unit_move_marker.is_active      = true
 	Utils.mouse_unit_move_marker.active_unit_id = _unit_id
-	Utils.mouse_unit_move_marker.pressed_button = self
+	Utils.mouse_unit_move_marker.from_unit_list = true
+	var mark = Utils.get_mark(PlayerInfo.armies[0][_unit_id][\"tags\"][0])
+	Utils.mouse_unit_move_marker.get_node(\"Sprite\").texture = mark
 "
 
 [sub_resource type="DynamicFontData" id=6]
@@ -87,6 +89,8 @@ font_data = SubResource( 6 )
 [sub_resource type="GDScript" id=9]
 script/source = "extends Control
 
+var max_capability = -1
+
 func clear():
 	$DragCommander.visible = true
 	$Const.visible         = false
@@ -94,6 +98,7 @@ func clear():
 	$Filled.visible        = false
 	$Filled2.visible       = false
 	$CommanderName.visible = false
+	max_capability         = -1
 
 func set_commander( unit ):
 	$DragCommander.visible = false
@@ -105,20 +110,32 @@ func set_commander( unit ):
 
 	$CommanderName.text = unit[\"name\"]
 	
-	$Filled.text  = \" / \" + str(min(unit[\"stats\"][\"int\"], 25))
-	$Filled2.text = str(1) + \" \"
+	max_capability = min(unit[\"stats\"][\"int\"], 25)
 	
+	$Filled.text  = \" / \" + str(max_capability)
+	$Filled2.text = str(1) + \" \"
+
+func update_commander_capability(unit, new_capability ):
+	set_commander(unit)
+	$Filled2.text = str( new_capability ) + \" \"
+	if new_capability == max_capability : 
+		$Filled.text  = \"MAX Reached\"
+		$Filled2.text = \"\"
 "
 
 [sub_resource type="GDScript" id=10]
 script/source = "extends Control
 
-var army_posiiton = {}
+var army_positions = {}
 var order_of_add  = []
 var commander_id  = -1
 
 var MIDDLE_POS    = Vector2(2,2)
 var ARMY_SIZE     = 5
+
+var army_capacity      = 0
+var commander_capacity = 0
+
 
 func create_army_holdes():
 	for i in range( ARMY_SIZE ):
@@ -138,59 +155,103 @@ func clear_holders():
 		child.clear_holder()
 
 func clear():
-	army_posiiton = {}
+	army_positions = {}
 	order_of_add  = []
 	commander_id  = -1
 	clear_holders()
 
+func update_army_capacity( unit, new_size ):
+	get_parent().get_parent().get_parent().update_commander_capcity(unit, new_size )
+
 func posToIndex( vec ):
 	return (vec.x *ARMY_SIZE  + vec.y ) 
 
-func replace_unit( unit, unit_id, unit_id_new, position):
+func remove_unit_from_board( unit_id ):
+	if unit_id == commander_id : get_parent().get_parent().get_parent().clear()
+	else :
+		_remove_unit_position( unit_id)
+		update_army_capacity( PlayerInfo.armies[0][unit_id], len( order_of_add ) )
+	
+func swap_units( unit, unit_id, unit_id_new, position):
 	var old_position = null
-	if army_posiiton.has(unit_id): old_position = army_posiiton[unit_id_new]
-	if army_posiiton.has(unit_id):     _remove_unit( unit_id )
-	if army_posiiton.has(unit_id_new): _remove_unit( unit_id_new )
+	if army_positions.has(unit_id_new): old_position = army_positions[unit_id_new]
+	if army_positions.has(unit_id):     _remove_unit_position( unit_id )
+	if army_positions.has(unit_id_new): _remove_unit_position( unit_id_new )
 	_set_unit( position, unit_id_new, unit)
+	if not PlayerInfo.armies[0].has( unit_id ): return
 	if old_position : _set_unit( old_position, unit_id, PlayerInfo.armies[0][unit_id])
 
-func _remove_unit( unit_id):
-	var commander_node = get_child(posToIndex( army_posiiton[unit_id] ))
-	commander_node.clear_holder()
-	army_posiiton.erase(unit_id)
+func _remove_unit_position( unit_id):
+	print( unit_id )
+	var holder = get_child(posToIndex( army_positions[unit_id] ))
+	holder.clear_holder()
+	army_positions.erase(unit_id)
 	order_of_add.erase(unit_id)
 
 func _set_unit( position, unit_id, unit ):
-	army_posiiton[unit_id] = position
+	army_positions[unit_id] = position
 	order_of_add.push_back(unit_id)
-	var commander_node = get_child(posToIndex( army_posiiton[unit_id] ))
-	commander_node.fill_holder( unit,  unit_id )
+	var holder = get_child(posToIndex( army_positions[unit_id] ))
+	holder.fill_holder( unit,  unit_id )
+
+func place_in_commander_place(unit, unit_id, position):
+	#for key in army_positions.keys():
+	#	if army_positions[key] == position : _remove_unit_position( key )
+	if army_positions.has(unit_id)     : _remove_unit_position( unit_id )
+	if army_positions.has(commander_id): _remove_unit_position( commander_id )
+	_set_unit( position, unit_id, unit)
+	commander_id      = unit_id
+	remove_army_over_capability( min(unit[\"stats\"][\"int\"], 25) )
+	update_army_capacity( PlayerInfo.armies[0][commander_id], len( order_of_add ) )
+
+func _need_replace_commander( position ):
+	return army_positions.has(commander_id) and position == army_positions[commander_id] 
+
+func _can_add_new_unit():
+	return commander_capacity > len( order_of_add )
 
 func place_unit( unit, unit_id, position):
-	if army_posiiton.has(unit_id): _remove_unit( unit_id )
-	_set_unit( position, unit_id, unit)
+	if _need_replace_commander(position): 
+		place_in_commander_place( unit, unit_id, position )
+	else:
+		if not _can_add_new_unit(): return
+		for key in army_positions.keys():
+			if army_positions[key] == position : _remove_unit_position( key )
+		if army_positions.has(unit_id): _remove_unit_position( unit_id )
+		_set_unit( position, unit_id, unit)
+		update_army_capacity(PlayerInfo.armies[0][commander_id], len( order_of_add ) )
 
+func remove_army_over_capability( new_capacity):
+	commander_capacity = new_capacity
+	if new_capacity - 1 > len( order_of_add )  : return
+	order_of_add.erase( commander_id )
+	while( new_capacity  <= len( order_of_add )  ):
+		var unit_to_remove = order_of_add.pop_back()
+		_remove_unit_position(unit_to_remove)
+	order_of_add.push_front(commander_id)
+	
 func place_commander(unit, unit_id):
 	var commander_position = MIDDLE_POS
-	if army_posiiton.has(commander_id): commander_position = army_posiiton[commander_id]
-	replace_unit( unit, commander_id, unit_id, commander_position)
-	commander_id = unit_id
-	get_child(posToIndex( MIDDLE_POS )).unit_id = unit_id
+	if army_positions.has(commander_id): commander_position = army_positions[commander_id]
+	swap_units( unit, commander_id, unit_id, commander_position)
+	commander_id       = unit_id
+	remove_army_over_capability( min(unit[\"stats\"][\"int\"], 25) )
+	update_army_capacity( unit, len( order_of_add ) )
 "
 
-[sub_resource type="DynamicFont" id=14]
+[sub_resource type="DynamicFont" id=11]
 size = 56
 font_data = ExtResource( 33 )
 
-[sub_resource type="DynamicFont" id=15]
+[sub_resource type="DynamicFont" id=12]
 size = 37
 font_data = ExtResource( 33 )
 
-[sub_resource type="DynamicFont" id=16]
+[sub_resource type="DynamicFont" id=13]
 size = 37
 font_data = ExtResource( 33 )
 
-[sub_resource type="Animation" id=11]
+[sub_resource type="Animation" id=14]
 length = 2.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("ActiveEmblem:modulate")
@@ -217,16 +278,16 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="GDScript" id=12]
+[sub_resource type="GDScript" id=15]
 script/source = "extends Area2D
 
 var is_active      = false
 var binded_unit    = {}
 var active_unit_id = -1 
-var pressed_button = null
+var from_unit_list = false
 "
 
-[sub_resource type="Animation" id=13]
+[sub_resource type="Animation" id=16]
 length = 4.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("AttackAnimation/OfensiveArmy:position")
@@ -964,7 +1025,7 @@ margin_left = 1337.49
 margin_top = 308.978
 margin_right = 1377.49
 margin_bottom = 347.978
-custom_fonts/font = SubResource( 14 )
+custom_fonts/font = SubResource( 11 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "XX"
@@ -977,7 +1038,7 @@ margin_left = 1353.78
 margin_top = 335.935
 margin_right = 1393.78
 margin_bottom = 374.935
-custom_fonts/font = SubResource( 14 )
+custom_fonts/font = SubResource( 11 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "XX"
@@ -991,7 +1052,7 @@ margin_left = 1395.97
 margin_top = 329.775
 margin_right = 1435.97
 margin_bottom = 355.775
-custom_fonts/font = SubResource( 15 )
+custom_fonts/font = SubResource( 12 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "XX"
@@ -1004,7 +1065,7 @@ margin_left = 1395.97
 margin_top = 348.775
 margin_right = 1435.97
 margin_bottom = 374.775
-custom_fonts/font = SubResource( 15 )
+custom_fonts/font = SubResource( 12 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "XX"
 __meta__ = {
@@ -1016,7 +1077,7 @@ margin_left = 1395.97
 margin_top = 339.775
 margin_right = 1435.97
 margin_bottom = 365.775
-custom_fonts/font = SubResource( 16 )
+custom_fonts/font = SubResource( 13 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "---"
 __meta__ = {
@@ -1061,7 +1122,7 @@ __meta__ = {
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="GUI/TurnControl"]
 playback_speed = 4.0
-anims/Switch = SubResource( 11 )
+anims/Switch = SubResource( 14 )
 
 [node name="ActiveEmblem" type="TextureRect" parent="GUI/TurnControl"]
 margin_left = 65.0
@@ -1129,7 +1190,7 @@ __meta__ = {
 [node name="UnitMoverMarker" type="Area2D" parent="GUI" groups=[
 "MouseClicker",
 ]]
-script = SubResource( 12 )
+script = SubResource( 15 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GUI/UnitMoverMarker"]
 shape = SubResource( 1 )
@@ -1219,7 +1280,7 @@ texture_mode = 1
 
 [node name="AttackAnimation" type="AnimationPlayer" parent="."]
 playback_speed = 3.0
-anims/Invade = SubResource( 13 )
+anims/Invade = SubResource( 16 )
 script = ExtResource( 22 )
 
 [node name="OfensiveArmy" type="Node2D" parent="AttackAnimation"]

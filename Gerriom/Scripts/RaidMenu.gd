@@ -19,4 +19,3 @@ func _input(event):
 		if not event.is_pressed() and event.button_index == BUTTON_LEFT:
 			Utils.mouse_unit_move_marker.position  = Vector2(-1000, -1000)
 			Utils.mouse_unit_move_marker.is_active = false
-			Utils.mouse_unit_move_marker.pressed_button = null
