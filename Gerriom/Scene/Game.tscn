@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=2]
+[gd_scene load_steps=51 format=2]
 
 [ext_resource path="res://Scene/WorldSandbox.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Textures/GUI/B3.png" type="Texture" id=2]
@@ -255,7 +255,11 @@ font_data = ExtResource( 33 )
 size = 37
 font_data = ExtResource( 33 )
 
-[sub_resource type="Animation" id=14]
+[sub_resource type="DynamicFont" id=14]
+size = 47
+font_data = ExtResource( 33 )
+
+[sub_resource type="Animation" id=15]
 length = 2.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("ActiveEmblem:modulate")
@@ -282,7 +286,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="GDScript" id=15]
+[sub_resource type="GDScript" id=16]
 script/source = "extends Area2D
 
 var is_active      = false
@@ -291,7 +295,7 @@ var active_unit_id = -1
 var from_unit_list = false
 "
 
-[sub_resource type="Animation" id=16]
+[sub_resource type="Animation" id=17]
 length = 4.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("AttackAnimation/OfensiveArmy:position")
@@ -568,6 +572,7 @@ margin_left = 1790.0
 margin_top = 17.0
 margin_right = 1807.0
 margin_bottom = 31.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "All"
 
 [node name="SortButton2" type="Control" parent="GUI/Menus/Control/RaidMenu/UnitList"]
@@ -694,6 +699,7 @@ margin_left = 1996.0
 margin_top = 57.0
 margin_right = 2114.0
 margin_bottom = 71.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "Test Name"
 
 [node name="Arg1" type="Label" parent="GUI/Menus/Control/RaidMenu/UnitList/List/Control"]
@@ -701,6 +707,7 @@ margin_left = 2096.0
 margin_top = 57.0
 margin_right = 2112.0
 margin_bottom = 71.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "00"
 
 [node name="Arg2" type="Label" parent="GUI/Menus/Control/RaidMenu/UnitList/List/Control"]
@@ -708,6 +715,7 @@ margin_left = 2119.0
 margin_top = 57.0
 margin_right = 2135.0
 margin_bottom = 71.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "00"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -718,6 +726,7 @@ margin_left = 2141.0
 margin_top = 57.0
 margin_right = 2157.0
 margin_bottom = 71.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "00"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -728,6 +737,7 @@ margin_left = 2164.0
 margin_top = 57.0
 margin_right = 2180.0
 margin_bottom = 71.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "00"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -738,6 +748,7 @@ margin_left = 2186.0
 margin_top = 57.0
 margin_right = 2210.0
 margin_bottom = 71.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "000"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -748,6 +759,7 @@ margin_left = 2210.0
 margin_top = 57.0
 margin_right = 2239.0
 margin_bottom = 71.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "/000"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -794,7 +806,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ReplenishButton2" type="Control" parent="GUI/Menus/Control/RaidMenu"]
+[node name="ReplenishButton" type="Control" parent="GUI/Menus/Control/RaidMenu"]
 margin_left = 412.0
 margin_top = -539.0
 margin_right = 452.0
@@ -804,7 +816,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureButton" type="TextureButton" parent="GUI/Menus/Control/RaidMenu/ReplenishButton2"]
+[node name="TextureButton" type="TextureButton" parent="GUI/Menus/Control/RaidMenu/ReplenishButton"]
 margin_left = 1349.53
 margin_top = 587.923
 margin_right = 1555.53
@@ -817,7 +829,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="GUI/Menus/Control/RaidMenu/ReplenishButton2"]
+[node name="Label" type="Label" parent="GUI/Menus/Control/RaidMenu/ReplenishButton"]
 anchor_left = 0.087
 anchor_top = 0.2
 anchor_right = 0.087
@@ -859,6 +871,7 @@ margin_top = 60.0
 margin_right = 1524.0
 margin_bottom = 88.0
 custom_fonts/font = SubResource( 7 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "Commander Name :"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -870,6 +883,7 @@ margin_top = 82.0
 margin_right = 1398.0
 margin_bottom = 110.0
 custom_fonts/font = SubResource( 8 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "Race :"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -881,6 +895,7 @@ margin_top = 83.0
 margin_right = 1480.0
 margin_bottom = 111.0
 custom_fonts/font = SubResource( 8 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "Test race"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -892,6 +907,7 @@ margin_top = 60.0
 margin_right = 1713.0
 margin_bottom = 88.0
 custom_fonts/font = SubResource( 7 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "Test Name"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -924,6 +940,7 @@ margin_left = 1794.62
 margin_top = 499.876
 margin_right = 1929.62
 margin_bottom = 513.876
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "Commander Capacity"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -934,6 +951,7 @@ margin_left = 1794.62
 margin_top = 516.876
 margin_right = 1929.62
 margin_bottom = 530.876
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = " / 5"
 align = 1
 __meta__ = {
@@ -945,6 +963,7 @@ margin_left = 1783.62
 margin_top = 516.876
 margin_right = 1918.62
 margin_bottom = 530.876
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "0"
 align = 1
 __meta__ = {
@@ -956,6 +975,7 @@ margin_left = 1794.62
 margin_top = 353.876
 margin_right = 1929.62
 margin_bottom = 367.876
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "Commander "
 align = 1
 __meta__ = {
@@ -967,6 +987,7 @@ margin_left = 1794.62
 margin_top = 370.876
 margin_right = 1929.62
 margin_bottom = 384.876
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "Commander Capacity"
 align = 1
 __meta__ = {
@@ -978,6 +999,7 @@ margin_left = 1787.43
 margin_top = 431.894
 margin_right = 1933.43
 margin_bottom = 496.894
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "Drag 
 Commander 
 Here !"
@@ -1139,6 +1161,116 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="EscapeConfirm" type="Control" parent="GUI/Menus/Control"]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="GUI/Menus/Control/EscapeConfirm"]
+margin_left = 1597.08
+margin_top = 198.787
+margin_right = 1973.08
+margin_bottom = 443.787
+texture = ExtResource( 23 )
+expand = true
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DeclineButton" type="Control" parent="GUI/Menus/Control/EscapeConfirm"]
+margin_left = 448.0
+margin_top = -210.0
+margin_right = 488.0
+margin_bottom = -170.0
+script = ExtResource( 30 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" type="TextureButton" parent="GUI/Menus/Control/EscapeConfirm/DeclineButton"]
+margin_left = 1349.53
+margin_top = 587.923
+margin_right = 1555.53
+margin_bottom = 660.923
+rect_scale = Vector2( 0.726, 0.6 )
+texture_normal = ExtResource( 19 )
+texture_pressed = ExtResource( 17 )
+texture_hover = ExtResource( 18 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="GUI/Menus/Control/EscapeConfirm/DeclineButton"]
+anchor_left = 0.087
+anchor_top = 0.2
+anchor_right = 0.087
+anchor_bottom = 0.2
+margin_left = 1335.06
+margin_top = 582.768
+margin_right = 1511.06
+margin_bottom = 665.768
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "Decline
+"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ConfirmButton" type="Control" parent="GUI/Menus/Control/EscapeConfirm"]
+margin_left = 290.0
+margin_top = -211.0
+margin_right = 330.0
+margin_bottom = -171.0
+script = ExtResource( 30 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" type="TextureButton" parent="GUI/Menus/Control/EscapeConfirm/ConfirmButton"]
+margin_left = 1349.53
+margin_top = 587.923
+margin_right = 1555.53
+margin_bottom = 660.923
+rect_scale = Vector2( 0.726, 0.6 )
+texture_normal = ExtResource( 19 )
+texture_pressed = ExtResource( 17 )
+texture_hover = ExtResource( 18 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="GUI/Menus/Control/EscapeConfirm/ConfirmButton"]
+anchor_left = 0.087
+anchor_top = 0.2
+anchor_right = 0.087
+anchor_bottom = 0.2
+margin_left = 1335.06
+margin_top = 582.768
+margin_right = 1511.06
+margin_bottom = 665.768
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "Confirm 
+"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="GUI/Menus/Control/EscapeConfirm"]
+margin_left = 1650.0
+margin_top = 263.0
+margin_right = 1923.0
+margin_bottom = 337.0
+custom_fonts/font = SubResource( 14 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "Do you really want to surrender this battle ?"
+align = 1
+autowrap = true
+
 [node name="TurnControl" type="Control" parent="GUI"]
 margin_left = -52.0
 margin_top = 6.0
@@ -1163,7 +1295,7 @@ __meta__ = {
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="GUI/TurnControl"]
 playback_speed = 4.0
-anims/Switch = SubResource( 14 )
+anims/Switch = SubResource( 15 )
 
 [node name="ActiveEmblem" type="TextureRect" parent="GUI/TurnControl"]
 margin_left = 65.0
@@ -1231,7 +1363,7 @@ __meta__ = {
 [node name="UnitMoverMarker" type="Area2D" parent="GUI" groups=[
 "MouseClicker",
 ]]
-script = SubResource( 15 )
+script = SubResource( 16 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GUI/UnitMoverMarker"]
 shape = SubResource( 1 )
@@ -1321,7 +1453,7 @@ texture_mode = 1
 
 [node name="AttackAnimation" type="AnimationPlayer" parent="."]
 playback_speed = 3.0
-anims/Invade = SubResource( 16 )
+anims/Invade = SubResource( 17 )
 script = ExtResource( 22 )
 
 [node name="OfensiveArmy" type="Node2D" parent="AttackAnimation"]
@@ -1353,10 +1485,12 @@ texture = ExtResource( 21 )
 [connection signal="button_down" from="GUI/Menus/Control/RaidMenu/UnitList/List/Control/TextureButton2" to="GUI/Menus/Control/RaidMenu/UnitList/List/Control" method="_on_TextureButton2_button_down"]
 [connection signal="mouse_entered" from="GUI/Menus/Control/RaidMenu/UnitList/List/Control/TextureButton2" to="GUI/Menus/Control/RaidMenu/UnitList/List/Control" method="_on_TextureButton2_mouse_entered"]
 [connection signal="button_down" from="GUI/Menus/Control/RaidMenu/ConfirmButton/TextureButton" to="GUI/Menus/Control/RaidMenu/ConfirmButton" method="_on_ConfirmButton1_button_down"]
-[connection signal="button_down" from="GUI/Menus/Control/RaidMenu/ReplenishButton2/TextureButton" to="GUI/Menus/Control/RaidMenu/ReplenishButton2" method="_on_ReplenishButton_button_down"]
+[connection signal="button_down" from="GUI/Menus/Control/RaidMenu/ReplenishButton/TextureButton" to="GUI/Menus/Control/RaidMenu/ReplenishButton" method="_on_ReplenishButton_button_down"]
 [connection signal="button_down" from="GUI/Menus/Control/RaidMenu/ArmyPreviev/ArmyPart/ClicablePart/ArmyPlaces/Control/Back" to="GUI/Menus/Control/RaidMenu/ArmyPreviev/ArmyPart/ClicablePart/ArmyPlaces/Control" method="_on_Back_button_down"]
 [connection signal="mouse_entered" from="GUI/Menus/Control/RaidMenu/ArmyPreviev/ArmyPart/ClicablePart/ArmyPlaces/Control/Back" to="GUI/Menus/Control/RaidMenu/ArmyPreviev/ArmyPart/ClicablePart/ArmyPlaces/Control" method="_on_ArmyUnitHolder_mouse_entered"]
 [connection signal="mouse_exited" from="GUI/Menus/Control/RaidMenu/ArmyPreviev/ArmyPart/ClicablePart/ArmyPlaces/Control/Back" to="GUI/Menus/Control/RaidMenu/ArmyPreviev/ArmyPart/ClicablePart/ArmyPlaces/Control" method="_on_ArmyUnitHolder_mouse_exited"]
+[connection signal="button_down" from="GUI/Menus/Control/EscapeConfirm/DeclineButton/TextureButton" to="GUI/Menus/Control/EscapeConfirm/DeclineButton" method="_on_DeclineButton_button_down"]
+[connection signal="button_down" from="GUI/Menus/Control/EscapeConfirm/ConfirmButton/TextureButton" to="GUI/Menus/Control/EscapeConfirm/ConfirmButton" method="_on_EscapeButton_button_down"]
 [connection signal="animation_finished" from="GUI/TurnControl/AnimationPlayer" to="GUI/TurnControl" method="_on_AnimationPlayer_animation_finished"]
 [connection signal="button_down" from="GUI/TurnControl/Button/TextureButton" to="GUI/TurnControl" method="_on_NextTurn_button_down"]
 [connection signal="animation_finished" from="AttackAnimation" to="AttackAnimation" method="_on_AttackAnimation_animation_finished"]

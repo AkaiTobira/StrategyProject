@@ -72,28 +72,41 @@ func calculate_army_force( army, ownerw ):
 	for unit in army.keys():
 		var race_multipler = get_race_multipler(PlayerInfo.armies[ownerw][unit]["race"])
 		stree +=  PlayerInfo.armies[ownerw][unit]["race"] + " : "
-		power += PlayerInfo.armies[ownerw][unit]["amout"]["curr"] * race_multipler
-	print( stree )
+		
+		var race_power = PlayerInfo.armies[ownerw][unit]["amout"]["curr"] * race_multipler
+		var att_force  = race_power * PlayerInfo.armies[ownerw][unit]["stats"]["str"]*0.1
+		var deff_force = race_power * PlayerInfo.armies[ownerw][unit]["stats"]["def"]*0.1
+		power += att_force + deff_force
+		
+		stree += " | " + str( att_force ) +  " " + str(deff_force) + " " + str(race_power) + "|\n"
+		
+	#print( stree )
 	return power
 
 func get_luck_multipler():
 	return min( (randf()* 0.1) + 0.9, 1.0)
 
+func continue_fight():
+	var luck = [ get_luck_multipler(), get_luck_multipler() ]
+	var army1_force = calculate_army_force( UIHandle.enemy_army1, UIHandle.army_owner1) * luck[0]
+	var army2_force = calculate_army_force( UIHandle.enemy_army2, UIHandle.army_owner2) * luck[1]
+	
+	print( army1_force," ", army2_force, " : ", luck )
+
+	if army1_force > army2_force:
+		var previous_owner = PlayerInfo.attacked_territory.current_owner
+		PlayerInfo.attacked_territory.change_owner( UIHandle.army_owner1 )
+		get_node("../World").update_player_territory_info()
+		if not PlayerInfo.player_info.has(previous_owner):
+			UIHandle.move_queue.erase( previous_owner )
+	if UIHandle.get_active_player() != PlayerInfo.player_id:
+		get_node("../GUI/TurnControl")._on_NextTurn_button_down()
+
 func _on_AttackAnimation_animation_finished(anim_name):
 	if anim_name == "Invade":
 		Utils.lock_menu_actions = false
-		var luck = [ get_luck_multipler(), get_luck_multipler() ]
-		var army1_force = calculate_army_force( UIHandle.enemy_army1, UIHandle.army_owner1) * luck[0]
-		var army2_force = calculate_army_force( UIHandle.enemy_army2, UIHandle.army_owner2) * luck[1]
-		
-		print( army1_force," ", army2_force, " : ", luck )
-		
-		if army1_force > army2_force:
-			var previous_owner = PlayerInfo.attacked_territory.current_owner
-			PlayerInfo.attacked_territory.change_owner( PlayerInfo.attacker_id )
-			get_node("../World").update_player_territory_info()
-			if not PlayerInfo.player_info.has(previous_owner):
-				UIHandle.move_queue.erase( previous_owner )
-		#if UIHandle.get_active_player() != PlayerInfo.player_id:
-		get_node("../GUI/TurnControl")._on_NextTurn_button_down()
-	pass # Replace with function body.
+		if UIHandle.army_owner2 == PlayerInfo.player_id:
+			PlayerInfo.is_player_attacking = true
+			get_parent().get_node("GUI").show_menu(1)
+			return
+		continue_fight()

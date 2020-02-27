@@ -54,15 +54,26 @@ func generate_atack_army( player ):
 	var commander_id = randi()%number_of_units
 	var commander = PlayerInfo.armies[player][ commander_id ]
 	var army_cap  = min( commander["stats"]["int"], number_of_units)
-#	print(commander["stats"]["int"], " ", number_of_units, " army Cap", army_cap)
 	var units     = PlayerInfo.armies[player].keys()
 	
 	var army_size = max( randi() % (army_cap), 2)
-	army[commander_id] = Vector2(0,0)
+	
+	var positions = []
+	for i in range( 5 ):
+		for j in range( 5):
+				positions.append( Vector2(i,j) )
+	
+	var position_index = randi()%len(positions)
+	army[commander_id] = positions[position_index]
+	positions.remove(position_index)
 	for i in range( army_size ):
 		var random_unit = randi()%number_of_units
 		while random_unit in army.keys(): random_unit = randi()%number_of_units
-		army[random_unit] = Vector2(0,0)
+		position_index = randi()%len(positions)
+		army[random_unit] = positions[position_index]
+		positions.remove(position_index)
+
+	print( army )
 	return army
 
 func atak_neighbour():

@@ -57,7 +57,12 @@ func show_menu( menu_id ):
 
 func _input(event):
 	if event is InputEventMouseButton && event.button_index == BUTTON_RIGHT:
-		hide_menu()
+		close_current_active_menu()
+		
+func close_current_active_menu():
+	match( active_menu ):
+		1 : $Menus/Control/RaidMenu.on_exit()
+		_ : return
 
 func hide_menu():
 	if is_menu_hided: return

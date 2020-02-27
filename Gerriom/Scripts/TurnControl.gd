@@ -13,10 +13,6 @@ func update():
 	$NextEmblem.modulate.a = 0
 
 func _on_NextTurn_button_down():
-	UIHandle.deactivate_territory()
-	get_parent().hide_menu()
-	get_parent().hide_options()
-
 	var anim  = $AnimationPlayer.get_animation( "Switch" )
 	
 	var index_1 = anim.find_track("ActiveEmblem:modulate")
@@ -25,6 +21,12 @@ func _on_NextTurn_button_down():
 	anim.track_set_key_value( index_1, 0, PlayerColors.get_player_active_color( UIHandle.get_active_player() ) )
 	anim.track_set_key_value( index_2, 2, PlayerColors.get_player_active_color( UIHandle.get_next_player() ) )
 	
+	if PlayerInfo.is_player_attacking: pass
+	else : close_menu()
+
+func close_menu():
+	UIHandle.deactivate_territory()
+	get_parent().close_current_active_menu()
 	$AnimationPlayer.play("Switch")
 
 func _on_AnimationPlayer_animation_finished(anim_name):

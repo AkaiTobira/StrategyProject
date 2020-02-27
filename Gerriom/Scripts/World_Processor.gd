@@ -2,7 +2,6 @@ extends Node
 
 var move_queue       = []
 var active_territory = null
-var selected_army    = {}
 var enemy_army1      = {}
 var enemy_army2      = {}
 
